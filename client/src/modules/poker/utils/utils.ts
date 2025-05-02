@@ -1,6 +1,6 @@
-import { CardSuit, CardValue } from "../types";
+import { CardSuit, CardValue, PokerCombination } from "../types";
 
-export const sortedValues = [
+export const SORTED_VALUES = [
   CardValue.TWO,
   CardValue.THREE,
   CardValue.FOUR,
@@ -16,9 +16,47 @@ export const sortedValues = [
   CardValue.ACE,
 ];
 
-export const sortedSuits = [
+export const SORTED_SUITS = [
   CardSuit.HEARTS,
   CardSuit.SPADES,
   CardSuit.DIAMONDS,
   CardSuit.CLUBS,
 ];
+
+export const SORTED_COMBINATIONS: PokerCombination[] = [
+  PokerCombination.HIGH_CARD,
+  PokerCombination.PAIR,
+  PokerCombination.TWO_PAIRS,
+  PokerCombination.THREE_OF_A_KIND,
+  PokerCombination.STRAIGHT,
+  PokerCombination.FLUSH,
+  PokerCombination.FULL_HOUSE,
+  PokerCombination.FOUR_OF_A_KIND,
+  PokerCombination.STRAIGHT_FLUSH,
+  PokerCombination.ROYAL_FLUSH,
+];
+
+export function combinationToHumanName(combination: PokerCombination): string {
+  switch (combination) {
+    case PokerCombination.ROYAL_FLUSH:
+      return "Royal Flush";
+    case PokerCombination.STRAIGHT_FLUSH:
+      return "Straight Flush";
+    case PokerCombination.FOUR_OF_A_KIND:
+      return "Four of a Kind";
+    case PokerCombination.FULL_HOUSE:
+      return "Full House";
+    case PokerCombination.FLUSH:
+      return "Flush";
+    case PokerCombination.STRAIGHT:
+      return "Straight";
+    case PokerCombination.THREE_OF_A_KIND:
+      return "Three of a Kind";
+    case PokerCombination.TWO_PAIRS:
+      return "Two Pairs";
+    case PokerCombination.PAIR:
+      return "Pair";
+    case PokerCombination.HIGH_CARD:
+      return "High Card";
+  }
+}

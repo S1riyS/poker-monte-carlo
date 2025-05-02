@@ -1,8 +1,8 @@
 import { Col, Container, Row } from "react-bootstrap";
-import CommunityCardsBlock from "./CommunityCardsBlock";
-import HoleCardsBlock from "./HoleCardsBlock";
-import SubmitSimulationButton from "./SubmitSimulationButton";
-import VisualizationBlock from "./VisualizationBlock";
+import CommunityCardsBlock from "../../components/CommunityCardsBlock";
+import HoleCardsBlock from "../../components/HoleCardsBlock";
+import SubmitSimulationButton from "../../components/SubmitSimulationButton";
+import VisualizationBlock from "../../components/VisualizationBlock";
 
 const MainPage = () => {
   return (

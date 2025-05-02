@@ -8,6 +8,7 @@ export enum PokerCombination {
   FULL_HOUSE = "FULL_HOUSE",
   FOUR_OF_A_KIND = "FOUR_OF_A_KIND",
   STRAIGHT_FLUSH = "STRAIGHT_FLUSH",
+  ROYAL_FLUSH = "ROYAL_FLUSH",
 }
 
 export enum CardValue {

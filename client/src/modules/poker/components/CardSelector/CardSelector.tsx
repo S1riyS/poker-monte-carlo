@@ -1,7 +1,7 @@
 import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { Button, Overlay, Popover } from "react-bootstrap";
 import { Card as CardType } from "../../types";
-import { sortedSuits, sortedValues } from "../../utils/utils";
+import { SORTED_SUITS, SORTED_VALUES } from "../../utils/utils";
 import PlayingCard, { PlayingCardProps } from "../PlayingCard/PlayingCard";
 import "./CardSelector.css";
 
@@ -18,9 +18,9 @@ const CardList: React.FC<{
 }> = ({ onCardSelect, setVisible, disabledCards }) => {
   return (
     <div className="d-flex flex-column space-y-2">
-      {sortedSuits.map((suit) => (
+      {SORTED_SUITS.map((suit) => (
         <div key={suit} className="d-flex flex-wrap">
-          {sortedValues.map((value) => {
+          {SORTED_VALUES.map((value) => {
             const disabled = disabledCards?.some(
               (card) => card && card.value === value && card.suit === suit,
             );

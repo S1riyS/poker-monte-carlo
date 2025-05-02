@@ -5,8 +5,8 @@ import { GenericApiError } from "src/modules/common/api/types";
 import LoadingButton from "src/modules/common/components/LoadingButton";
 import { RootState, useAppDispatch } from "src/store";
 import { setSimulationResult } from "src/store/poker.reducer";
-import { useRunSimulationMutation } from "../../services/api/api";
-import { cardToApiCard } from "../../services/api/utils";
+import { useRunSimulationMutation } from "../services/api/api";
+import { cardToApiCard } from "../services/api/utils";
 
 const SubmitSimulationButton = () => {
   const [runSimulation, { data, isLoading, isError, error }] =
