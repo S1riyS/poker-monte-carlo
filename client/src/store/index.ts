@@ -16,12 +16,14 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { pokerApi } from "src/modules/poker/services/api/api";
 import pokerReducer from "./poker.reducer";
 import settingsReducer from "./settings.reducer";
 
 const rootReducer = combineReducers({
   settings: settingsReducer,
   poker: pokerReducer,
+  [pokerApi.reducerPath]: pokerApi.reducer,
 });
 
 const persistConfig = {
@@ -39,7 +41,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(pokerApi.middleware),
 });
 
 export const persistor = persistStore(store);

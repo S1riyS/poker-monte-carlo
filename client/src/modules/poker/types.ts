@@ -1,3 +1,15 @@
+export enum PokerCombination {
+  HIGH_CARD = "HIGH_CARD",
+  PAIR = "PAIR",
+  TWO_PAIRS = "TWO_PAIRS",
+  THREE_OF_A_KIND = "THREE_OF_A_KIND",
+  STRAIGHT = "STRAIGHT",
+  FLUSH = "FLUSH",
+  FULL_HOUSE = "FULL_HOUSE",
+  FOUR_OF_A_KIND = "FOUR_OF_A_KIND",
+  STRAIGHT_FLUSH = "STRAIGHT_FLUSH",
+}
+
 export enum CardValue {
   ACE = "A",
   TWO = "2",
@@ -22,11 +34,11 @@ export enum CardSuit {
 }
 
 export type Card = {
-  value: CardValue | null;
-  suit: CardSuit | null;
+  value: CardValue;
+  suit: CardSuit;
 };
 
 export enum CardStyle {
-  SIMPLE = "SIMPLE",
-  MIRRORED = "MIRRORED",
+  SIMPLE = "Simple",
+  MIRRORED = "Mirrored",
 }

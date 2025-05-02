@@ -1,15 +1,18 @@
 // store/pokerSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RunSimulationResponse } from "src/modules/poker/services/api/types";
 import { Card as CardType } from "src/modules/poker/types";
 
-interface CardsState {
+interface PokerState {
   holeCards: [CardType | null, CardType | null];
   communityCards: (CardType | null)[];
+  simulationResult: RunSimulationResponse | null;
 }
 
-const initialState: CardsState = {
+const initialState: PokerState = {
   holeCards: [null, null],
   communityCards: Array(5).fill(null),
+  simulationResult: null,
 };
 
 const pokerSlice = createSlice({
@@ -31,9 +34,19 @@ const pokerSlice = createSlice({
     resetCommunityCards: (state) => {
       state.communityCards = Array(5).fill(null);
     },
+    setSimulationResult(
+      state,
+      action: PayloadAction<RunSimulationResponse | null>,
+    ) {
+      state.simulationResult = action.payload;
+    },
   },
 });
 
-export const { setHoleCard, setCommunityCard, resetCommunityCards } =
-  pokerSlice.actions;
+export const {
+  setHoleCard,
+  setCommunityCard,
+  resetCommunityCards,
+  setSimulationResult,
+} = pokerSlice.actions;
 export default pokerSlice.reducer;

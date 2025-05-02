@@ -22,18 +22,3 @@ export const sortedSuits = [
   CardSuit.DIAMONDS,
   CardSuit.CLUBS,
 ];
-
-export function valueToInt(value: CardValue) {
-  switch (value) {
-    case CardValue.ACE:
-      return 14;
-    case CardValue.KING:
-      return 13;
-    case CardValue.QUEEN:
-      return 12;
-    case CardValue.JACK:
-      return 11;
-    default:
-      return parseInt(value);
-  }
-}
