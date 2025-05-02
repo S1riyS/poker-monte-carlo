@@ -25,7 +25,6 @@ const CombinationBreakdownChart: React.FC<CombinationBreakdownChartProps> = ({
   data,
 }) => {
   const transformedData = useMemo(() => {
-    if (!data) return [];
     return data.map((e) => ({
       name: combinationToHumanName(e.name),
       wins: e.win,
@@ -34,7 +33,6 @@ const CombinationBreakdownChart: React.FC<CombinationBreakdownChartProps> = ({
     }));
   }, [data]);
 
-  if (!data) return <span>summary chart: no data</span>;
   return (
     <ResponsiveContainer width="100%" height={transformedData.length * 40}>
       <BarChart layout="vertical" data={transformedData}>

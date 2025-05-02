@@ -22,14 +22,12 @@ type SummaryChartProps = {
 
 const SummaryChart: React.FC<SummaryChartProps> = ({ data }) => {
   const transformedData = useMemo(() => {
-    if (!data) return [];
     const wins = data.reduce((a, b) => a + b.win, 0);
     const losses = data.reduce((a, b) => a + b.lose, 0);
     const ties = data.reduce((a, b) => a + b.tie, 0);
     return [{ name: "Outcomes", wins, losses, ties }];
   }, [data]);
 
-  if (!data) return <span>summary chart: no data</span>;
   return (
     <ResponsiveContainer width="100%" height={80}>
       <BarChart layout="vertical" data={transformedData}>

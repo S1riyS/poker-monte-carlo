@@ -31,8 +31,6 @@ type WinsBreakdownChartProps = {
 
 const WinsBreakdownChart: React.FC<WinsBreakdownChartProps> = ({ data }) => {
   const transformedData = useMemo(() => {
-    if (!data) return [];
-
     return [
       {
         name: "Wins",
@@ -50,7 +48,6 @@ const WinsBreakdownChart: React.FC<WinsBreakdownChartProps> = ({ data }) => {
     );
   }, [transformedData]);
 
-  if (!data) return <span>summary chart: no data</span>;
   return (
     <ResponsiveContainer width="100%" height={80}>
       <BarChart layout="vertical" data={transformedData}>
