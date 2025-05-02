@@ -27,8 +27,10 @@ function getCardState(
     }
     return { cardDisabled: true, required: false };
   } else if (activeCards == 4) {
-    if (i < 5) {
+    if (i < 4) {
       return { cardDisabled: false, required: false };
+    } else if (i == 4) {
+      return { cardDisabled: false, required: true };
     }
     return { cardDisabled: true, required: false };
   }
