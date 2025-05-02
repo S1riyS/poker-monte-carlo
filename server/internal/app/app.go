@@ -10,8 +10,10 @@ import (
 	"time"
 
 	"github.com/S1riyS/poker-monte-carlo/internal/api/middlewares"
+	"github.com/S1riyS/poker-monte-carlo/internal/api/router"
 	"github.com/S1riyS/poker-monte-carlo/internal/security/validation"
 	"github.com/S1riyS/poker-monte-carlo/pkg/logger"
+	_ "github.com/S1riyS/poker-monte-carlo/swagger"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/recover"
@@ -162,7 +164,7 @@ func (a *App) initControllers() error {
 
 	// API v1 router (/api/v1)
 	v1Router := api.Group("/v1")
-	_ = v1Router
+	router.Setup(v1Router)
 
 	return nil
 }

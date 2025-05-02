@@ -8,20 +8,16 @@ import (
 
 // Application entry point
 //
-//	@title						GoQuiz
-//	@version					1.0
-//	@description				A quizes management service API in Go using Fiber framework.
+//	@title			PokerMonteCarlo
+//	@version		1.0
+//	@description	Simulation of starting hand in poker with Monte-Carlo method.
 //
-//	@contact.name				Ankudinov Kirill
-//	@contact.url				https://github.com/S1riyS
-//	@contact.email				kirill.ankudinov.94@mail.ru
+//	@contact.name	Ankudinov Kirill
+//	@contact.url	https://github.com/S1riyS
+//	@contact.email	kirill.ankudinov.94@mail.ru
 //
-//	@host						localhost:8080
-//	@BasePath					/api
-//
-//	@securityDefinitions.apikey	ApiKeyAuth
-//	@in							header
-//	@name						Authorization
+//	@host			localhost:8080
+//	@BasePath		/api
 func main() {
 	// Setup and run app
 	app := app.New()
