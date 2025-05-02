@@ -1,7 +1,7 @@
 import React from "react";
-import MainPage from "src/modules/common/pages/MainPage/MainPage";
 import NotFoundPage from "src/modules/common/pages/NotFoundPage";
 import SettingsPage from "src/modules/common/pages/SettingsPage";
+import MainPage from "src/modules/poker/pages/MainPage/MainPage";
 
 export type Route = {
   path: string;
