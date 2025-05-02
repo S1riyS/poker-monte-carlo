@@ -1,6 +1,7 @@
 import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { Button, Overlay, Popover } from "react-bootstrap";
-import { CardSuit, Card as CardType, CardValue } from "../../types";
+import { Card as CardType } from "../../types";
+import { sortedSuits, sortedValues } from "../../utils/utils";
 import PlayingCard, { PlayingCardProps } from "../PlayingCard/PlayingCard";
 import "./CardSelector.css";
 
@@ -15,34 +16,11 @@ const CardList: React.FC<{
   setVisible: (visible: boolean) => void;
   disabledCards?: (CardType | null)[];
 }> = ({ onCardSelect, setVisible, disabledCards }) => {
-  const values = [
-    CardValue.TWO,
-    CardValue.THREE,
-    CardValue.FOUR,
-    CardValue.FIVE,
-    CardValue.SIX,
-    CardValue.SEVEN,
-    CardValue.EIGHT,
-    CardValue.NINE,
-    CardValue.TEN,
-    CardValue.JACK,
-    CardValue.QUEEN,
-    CardValue.KING,
-    CardValue.ACE,
-  ];
-
-  const suits = [
-    CardSuit.HEARTS,
-    CardSuit.SPADES,
-    CardSuit.DIAMONDS,
-    CardSuit.CLUBS,
-  ];
-
   return (
     <div className="d-flex flex-column space-y-2">
-      {suits.map((suit) => (
+      {sortedSuits.map((suit) => (
         <div key={suit} className="d-flex flex-wrap">
-          {values.map((value) => {
+          {sortedValues.map((value) => {
             const disabled = disabledCards?.some(
               (card) => card && card.value === value && card.suit === suit,
             );
