@@ -1,14 +1,13 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import CardSelector from "src/modules/poker/components/CardSelector/CardSelector";
 import { Card as CardType } from "src/modules/poker/types";
-
-interface CommunityCardsBlockProps {
-  holeCard0?: CardType | null;
-  holeCard1?: CardType | null;
-  communityCards: (CardType | null)[];
-  setCommunityCards: (cards: (CardType | null)[]) => void;
-}
+import { RootState, useAppDispatch } from "src/store";
+import {
+  resetCommunityCards as resetCommunityCardsAction,
+  setCommunityCard as setCommunityCardAction,
+} from "src/store/poker.reducer";
 
 function getCardState(
   i: number,
@@ -36,12 +35,22 @@ function getCardState(
   return { cardDisabled: false, required: false };
 }
 
-const CommunityCardsBlock: React.FC<CommunityCardsBlockProps> = ({
-  holeCard0,
-  holeCard1,
-  communityCards,
-  setCommunityCards,
-}) => {
+const CommunityCardsBlock: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const holeCard0 = useSelector((state: RootState) => state.poker.holeCards[0]);
+  const holeCard1 = useSelector((state: RootState) => state.poker.holeCards[1]);
+  const communityCards = useSelector(
+    (state: RootState) => state.poker.communityCards,
+  );
+  const setCommunityCard = useCallback(
+    (index: number, card: CardType | null) =>
+      dispatch(setCommunityCardAction({ index, card })),
+    [dispatch],
+  );
+  const resetCommunityCards = useCallback(() => {
+    dispatch(resetCommunityCardsAction());
+  }, [dispatch]);
+
   const [communityCardsEnabled, setCommunityCardsEnabled] =
     useState<boolean>(false);
 
@@ -66,20 +75,12 @@ const CommunityCardsBlock: React.FC<CommunityCardsBlockProps> = ({
               key={`community-card-${i}`}
               className="m-1"
               card={card}
-              onCardSelect={(card) => {
-                const newCards = [...communityCards];
-                newCards[i] = card;
-                setCommunityCards(newCards);
-              }}
+              onCardSelect={(card) => setCommunityCard(i, card)}
               disabledCards={communityCards.concat([
                 holeCard0 ?? null,
                 holeCard1 ?? null,
               ])}
-              onCardReset={() =>
-                setCommunityCards(
-                  communityCards.map((card, ri) => (i === ri ? null : card)),
-                )
-              }
+              onCardReset={() => setCommunityCard(i, null)}
               {...cardsState[i]}
             />
           ))}
@@ -93,7 +94,7 @@ const CommunityCardsBlock: React.FC<CommunityCardsBlockProps> = ({
           onChange={(e) => {
             setCommunityCardsEnabled(e.target.checked);
             if (!e.target.checked) {
-              setCommunityCards(Array(5).fill(null));
+              resetCommunityCards();
             }
           }}
         />
@@ -101,7 +102,7 @@ const CommunityCardsBlock: React.FC<CommunityCardsBlockProps> = ({
           <Button
             size="sm"
             variant="outline-danger"
-            onClick={() => setCommunityCards(Array(5).fill(null))}
+            onClick={() => resetCommunityCards()}
           >
             Reset
           </Button>

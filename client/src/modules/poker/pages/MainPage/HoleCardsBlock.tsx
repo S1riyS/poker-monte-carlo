@@ -1,21 +1,20 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import CardSelector from "src/modules/poker/components/CardSelector/CardSelector";
 import { Card as CardType } from "src/modules/poker/types";
+import { RootState, useAppDispatch } from "src/store";
+import { setHoleCard } from "src/store/poker.reducer";
 
-interface HoleCardsBlockProps {
-  holeCard0: CardType | null;
-  holeCard1: CardType | null;
-  setHoleCard0: (card: CardType | null) => void;
-  setHoleCard1: (card: CardType | null) => void;
-}
+const HoleCardsBlock: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const holeCard0 = useSelector((state: RootState) => state.poker.holeCards[0]);
+  const holeCard1 = useSelector((state: RootState) => state.poker.holeCards[1]);
+  const setHoleCard0 = (card: CardType | null) =>
+    dispatch(setHoleCard({ index: 0, card }));
+  const setHoleCard1 = (card: CardType | null) =>
+    dispatch(setHoleCard({ index: 1, card }));
 
-const HoleCardsBlock: React.FC<HoleCardsBlockProps> = ({
-  holeCard0,
-  holeCard1,
-  setHoleCard0,
-  setHoleCard1,
-}) => {
   return (
     <Card className="mb-3">
       <Card.Header>Select hole cards</Card.Header>

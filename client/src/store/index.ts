@@ -16,10 +16,12 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import pokerReducer from "./poker.reducer";
 import settingsReducer from "./settings.reducer";
 
 const rootReducer = combineReducers({
   settings: settingsReducer,
+  poker: pokerReducer,
 });
 
 const persistConfig = {
