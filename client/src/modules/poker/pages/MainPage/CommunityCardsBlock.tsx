@@ -66,7 +66,7 @@ const CommunityCardsBlock: React.FC = () => {
   }, [communityCards]);
 
   return (
-    <Card>
+    <Card className="mb-3">
       <Card.Header>Select community cards</Card.Header>
       {communityCardsEnabled && (
         <Card.Body className="d-flex flex-wrap">

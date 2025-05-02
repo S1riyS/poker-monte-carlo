@@ -1,6 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import CommunityCardsBlock from "./CommunityCardsBlock";
 import HoleCardsBlock from "./HoleCardsBlock";
+import SubmitSimulationButton from "./SubmitSimulationButton";
 import VisualizationBlock from "./VisualizationBlock";
 
 const MainPage = () => {
@@ -10,8 +11,9 @@ const MainPage = () => {
       <Row>
         <Col md={6} lg={4}>
           <HoleCardsBlock />
-
           <CommunityCardsBlock />
+          <hr />
+          <SubmitSimulationButton />
         </Col>
 
         <Col md={6} lg={8}>
