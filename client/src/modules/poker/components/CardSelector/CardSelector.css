@@ -1,0 +1,4 @@
+.wide-popover {
+  max-width: 100vw !important;
+  width: max-content;
+}

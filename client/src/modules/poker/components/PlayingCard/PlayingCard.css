@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+
+.playing-card {
+  color: red;
+  text-align: center;
+  border: 1px solid #999;
+  border-radius: 8px;
+  font-family: "Abril Fatface";
+}
+.playing-card.clickable {
+  cursor: pointer;
+}
+.playing-card.clickable:hover {
+  border: 1px solid #0d6dfe;
+}
+.playing-card.clickable.required {
+  border: 1px solid #3d9dfe;
+}
+.playing-card.disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
