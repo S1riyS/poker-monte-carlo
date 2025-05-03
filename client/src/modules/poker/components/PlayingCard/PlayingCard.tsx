@@ -4,7 +4,7 @@ import { ImClubs, ImDiamonds, ImHeart, ImSpades } from "react-icons/im";
 import { RiQuestionMark } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { RootState } from "src/store";
-import { CardStyle, CardSuit, Card as CardType } from "../../types";
+import { CardStyle, CardSuit, Card as CardType, CardValue } from "../../types";
 import "./PlayingCard.css";
 
 function suitIcon(suit?: CardSuit | null): React.ReactNode {
@@ -100,6 +100,10 @@ const PlayingCard: React.FC<PlayingCardProps> = ({
               fontSize: dimensions.fontSize,
               lineHeight: "1",
               textAlign: "left",
+              textDecorationLine:
+                card?.value === CardValue.SIX || card?.value === CardValue.NINE
+                  ? "underline"
+                  : "none",
             }}
           >
             {card?.value ?? ""}
@@ -112,6 +116,10 @@ const PlayingCard: React.FC<PlayingCardProps> = ({
               fontSize: dimensions.fontSize,
               lineHeight: "1",
               textAlign: "left",
+              textDecorationLine:
+                card?.value === CardValue.SIX || card?.value === CardValue.NINE
+                  ? "underline"
+                  : "none",
               transform: "rotate(180deg)",
             }}
           >
