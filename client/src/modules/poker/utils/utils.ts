@@ -1,6 +1,7 @@
 import {
   CardSuit,
   CardValue,
+  CardValueSymbol,
   PokerCombination,
   PokerCombinationName,
 } from "../types";
@@ -65,5 +66,36 @@ export function combinationToHumanName(
       return "Pair";
     case PokerCombination.HIGH_CARD:
       return "High Card";
+  }
+}
+
+export function valueToSymbol(value: CardValue): CardValueSymbol {
+  switch (value) {
+    case CardValue.ACE:
+      return "A";
+    case CardValue.KING:
+      return "K";
+    case CardValue.QUEEN:
+      return "Q";
+    case CardValue.JACK:
+      return "J";
+    case CardValue.TEN:
+      return "10";
+    case CardValue.NINE:
+      return "9";
+    case CardValue.EIGHT:
+      return "8";
+    case CardValue.SEVEN:
+      return "7";
+    case CardValue.SIX:
+      return "6";
+    case CardValue.FIVE:
+      return "5";
+    case CardValue.FOUR:
+      return "4";
+    case CardValue.THREE:
+      return "3";
+    case CardValue.TWO:
+      return "2";
   }
 }

@@ -1,4 +1,4 @@
-import { CardSuit, PokerCombination } from "../../types";
+import { Card as CardType, PokerCombination } from "../../types";
 
 export type CardValueInt =
   | 2
@@ -17,14 +17,21 @@ export type CardValueInt =
 
 export type ApiCard = {
   rank: CardValueInt;
-  suit: CardSuit;
+  suit: "hearts" | "diamonds" | "clubs" | "spades";
 };
 
 export type RunSimulationRequest = {
   iterations: number;
   players: number;
+  hand: CardType[];
+  table?: CardType[];
+};
+
+export type RawRunSimulationRequest = {
   hand: ApiCard[];
   table?: ApiCard[];
+  iterations: number;
+  players: number;
 };
 
 export type RunSimulationResponse = {

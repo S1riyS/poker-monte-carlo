@@ -26,7 +26,7 @@ export function cardValueToInt(value: CardValue): CardValueInt {
 
 export function cardToApiCard(card: CardType): ApiCard {
   return {
-    suit: card.suit,
+    suit: card.suit.toLowerCase() as ApiCard["suit"],
     rank: cardValueToInt(card.value),
   };
 }

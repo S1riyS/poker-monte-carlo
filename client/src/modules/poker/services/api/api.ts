@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
+  RawRunSimulationRequest,
   RawSimulationEntry,
   RunSimulationRequest,
   RunSimulationResponse,
 } from "./types";
+import { cardToApiCard } from "./utils";
 
 export const pokerApi = createApi({
   reducerPath: "pokerApi",
@@ -15,7 +17,12 @@ export const pokerApi = createApi({
       query: (data) => ({
         url: "/simulation",
         method: "POST",
-        body: data,
+        body: {
+          hand: data.hand.map(cardToApiCard),
+          table: data.table ? data.table.map(cardToApiCard) : [],
+          iterations: data.iterations,
+          players: data.players,
+        } as RawRunSimulationRequest,
       }),
       transformResponse: (data) => {
         const raw = (data as { Data: RawSimulationEntry[] }).Data;

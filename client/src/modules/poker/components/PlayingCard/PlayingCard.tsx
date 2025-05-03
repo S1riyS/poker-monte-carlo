@@ -5,6 +5,7 @@ import { RiQuestionMark } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { RootState } from "src/store";
 import { CardStyle, CardSuit, Card as CardType, CardValue } from "../../types";
+import { valueToSymbol } from "../../utils/utils";
 import "./PlayingCard.css";
 
 function suitIcon(suit?: CardSuit | null): React.ReactNode {
@@ -106,7 +107,7 @@ const PlayingCard: React.FC<PlayingCardProps> = ({
                   : "none",
             }}
           >
-            {card?.value ?? ""}
+            {card ? valueToSymbol(card.value) : ""}
           </span>
           <span style={{ fontSize: dimensions.fontSize, lineHeight: "1" }}>
             {symbol}
@@ -123,14 +124,16 @@ const PlayingCard: React.FC<PlayingCardProps> = ({
               transform: "rotate(180deg)",
             }}
           >
-            {card?.value ?? ""}
+            {card ? valueToSymbol(card.value) : ""}
           </span>
         </>
       )}
       {cardStyle === CardStyle.SIMPLE && (
         <>
           {card?.value && (
-            <span style={{ fontSize: dimensions.fontSize }}>{card.value}</span>
+            <span style={{ fontSize: dimensions.fontSize }}>
+              {valueToSymbol(card.value)}
+            </span>
           )}
           <span style={{ fontSize: dimensions.fontSize }}>{symbol}</span>
         </>

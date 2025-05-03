@@ -23,27 +23,42 @@ export type PokerCombinationName =
   | "Straight Flush"
   | "Royal Flush";
 
+export type CardValueSymbol =
+  | "2"
+  | "3"
+  | "4"
+  | "5"
+  | "6"
+  | "7"
+  | "8"
+  | "9"
+  | "10"
+  | "J"
+  | "Q"
+  | "K"
+  | "A";
+
 export enum CardValue {
-  ACE = "A",
-  TWO = "2",
-  THREE = "3",
-  FOUR = "4",
-  FIVE = "5",
-  SIX = "6",
-  SEVEN = "7",
-  EIGHT = "8",
-  NINE = "9",
-  TEN = "10",
-  JACK = "J",
-  QUEEN = "Q",
-  KING = "K",
+  ACE = "ACE",
+  TWO = "TWO",
+  THREE = "THREE",
+  FOUR = "FOUR",
+  FIVE = "FIVE",
+  SIX = "SIX",
+  SEVEN = "SEVEN",
+  EIGHT = "EIGHT",
+  NINE = "NINE",
+  TEN = "TEN",
+  JACK = "JACK",
+  QUEEN = "QUEEN",
+  KING = "KING",
 }
 
 export enum CardSuit {
-  CLUBS = "Clubs",
-  DIAMONDS = "Diamonds",
-  HEARTS = "Hearts",
-  SPADES = "Spades",
+  CLUBS = "CLUBS",
+  DIAMONDS = "DIAMONDS",
+  HEARTS = "HEARTS",
+  SPADES = "SPADES",
 }
 
 export type Card = {
@@ -52,6 +67,6 @@ export type Card = {
 };
 
 export enum CardStyle {
-  SIMPLE = "Simple",
-  MIRRORED = "Mirrored",
+  SIMPLE = "SIMPLE",
+  MIRRORED = "MIRRORED",
 }

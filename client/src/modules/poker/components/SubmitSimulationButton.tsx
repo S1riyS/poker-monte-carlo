@@ -6,7 +6,6 @@ import LoadingButton from "src/modules/common/components/LoadingButton";
 import { RootState, useAppDispatch } from "src/store";
 import { setSimulationResult } from "src/store/poker.reducer";
 import { useRunSimulationMutation } from "../services/api/api";
-import { cardToApiCard } from "../services/api/utils";
 
 const SubmitSimulationButton = () => {
   const [runSimulation, { data, isLoading, isError, error }] =
@@ -47,11 +46,8 @@ const SubmitSimulationButton = () => {
     runSimulation({
       iterations: params.iterationCount,
       players: params.playerCount,
-      hand: [
-        cardToApiCard(params.holeCards[0]),
-        cardToApiCard(params.holeCards[1]),
-      ],
-      table: params.communityCards.filter((e) => !!e).map(cardToApiCard),
+      hand: [params.holeCards[0], params.holeCards[1]],
+      table: params.communityCards.filter((e) => !!e),
     });
   }, [params, runSimulation]);
 
