@@ -8,10 +8,9 @@ type Combination struct {
 }
 
 var Combinations = []Combination{
-	{"none", 0},
 	{"high_card", 1},
 	{"pair", 2},
-	{"two_pair", 3},
+	{"two_pairs", 3},
 	{"three_of_a_kind", 4},
 	{"straight", 5},
 	{"flush", 6},

@@ -203,7 +203,7 @@ func evaluateFiveCards(cards []Card) CombinationResult {
 			}
 		}
 		return CombinationResult{
-			Combination: Combination{Name: "two_pair", Value: 3},
+			Combination: Combination{Name: "two_pairs", Value: 3},
 			RankValues:  []int{pairs[0], pairs[1], kicker},
 		}
 	}
