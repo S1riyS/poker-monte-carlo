@@ -29,9 +29,7 @@ type CombinationsChartProps = {
   data: RunSimulationResponse;
 };
 
-const CombinationsChart: React.FC<CombinationsChartProps> = ({
-  data,
-}) => {
+const CombinationsChart: React.FC<CombinationsChartProps> = ({ data }) => {
   const transformedData: ({
     name: string;
   } & {
@@ -59,7 +57,7 @@ const CombinationsChart: React.FC<CombinationsChartProps> = ({
       <BarChart layout="vertical" data={transformedData}>
         <XAxis type="number" />
         <YAxis type="category" dataKey="name" />
-        <Tooltip />
+        <Tooltip wrapperStyle={{ zIndex: 99999 }} />
         <Legend />
         {usedCombinations.map((e) => (
           <Bar key={e} dataKey={e} stackId="b" fill={COLORS[e]} />

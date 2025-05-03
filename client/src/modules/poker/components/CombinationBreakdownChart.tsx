@@ -38,7 +38,7 @@ const CombinationBreakdownChart: React.FC<CombinationBreakdownChartProps> = ({
       <BarChart layout="vertical" data={transformedData}>
         <XAxis type="number" />
         <YAxis type="category" dataKey="name" />
-        <Tooltip />
+        <Tooltip wrapperStyle={{ zIndex: 99999 }} />
         <Legend />
         <Bar dataKey="wins" stackId="c" fill={COLORS.wins} />
         <Bar dataKey="losses" stackId="c" fill={COLORS.losses} />

@@ -33,7 +33,7 @@ const SummaryChart: React.FC<SummaryChartProps> = ({ data }) => {
       <BarChart layout="vertical" data={transformedData}>
         <XAxis type="number" />
         <YAxis type="category" dataKey="name" />
-        <Tooltip />
+        <Tooltip wrapperStyle={{ zIndex: 99999 }} />
         <Legend />
         <Bar dataKey="wins" stackId="a" fill={COLORS.wins} />
         <Bar dataKey="losses" stackId="a" fill={COLORS.losses} />
