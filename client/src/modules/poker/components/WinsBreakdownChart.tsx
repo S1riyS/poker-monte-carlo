@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 import { RunSimulationResponse } from "../services/api/types";
-import { PokerCombination } from "../types";
+import { PokerCombination, PokerCombinationName } from "../types";
 import { combinationToHumanName, SORTED_COMBINATIONS } from "../utils/utils";
 
 const COLORS: Record<string, string> = {
@@ -30,7 +30,11 @@ type WinsBreakdownChartProps = {
 };
 
 const WinsBreakdownChart: React.FC<WinsBreakdownChartProps> = ({ data }) => {
-  const transformedData = useMemo(() => {
+  const transformedData: ({
+    name: string;
+  } & {
+    [K in PokerCombinationName]?: number;
+  })[] = useMemo(() => {
     return [
       {
         name: "Wins",
@@ -44,9 +48,12 @@ const WinsBreakdownChart: React.FC<WinsBreakdownChartProps> = ({ data }) => {
   }, [data]);
   const usedCombinations = useMemo(() => {
     return SORTED_COMBINATIONS.map(combinationToHumanName).filter(
-      (c) => c in transformedData[0],
+      (c) => transformedData[0][c] !== undefined && transformedData[0][c] > 0,
     );
   }, [transformedData]);
+
+  console.log("transformed data", transformedData);
+  console.log("used combinations", usedCombinations);
 
   return (
     <ResponsiveContainer width="100%" height={80}>

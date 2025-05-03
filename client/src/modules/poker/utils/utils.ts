@@ -1,4 +1,9 @@
-import { CardSuit, CardValue, PokerCombination } from "../types";
+import {
+  CardSuit,
+  CardValue,
+  PokerCombination,
+  PokerCombinationName,
+} from "../types";
 
 export const SORTED_VALUES = [
   CardValue.TWO,
@@ -36,7 +41,9 @@ export const SORTED_COMBINATIONS: PokerCombination[] = [
   PokerCombination.ROYAL_FLUSH,
 ];
 
-export function combinationToHumanName(combination: PokerCombination): string {
+export function combinationToHumanName(
+  combination: PokerCombination,
+): PokerCombinationName {
   switch (combination) {
     case PokerCombination.ROYAL_FLUSH:
       return "Royal Flush";

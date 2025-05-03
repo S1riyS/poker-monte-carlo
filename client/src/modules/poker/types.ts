@@ -11,6 +11,18 @@ export enum PokerCombination {
   ROYAL_FLUSH = "ROYAL_FLUSH",
 }
 
+export type PokerCombinationName =
+  | "High Card"
+  | "Pair"
+  | "Two Pairs"
+  | "Three of a Kind"
+  | "Straight"
+  | "Flush"
+  | "Full House"
+  | "Four of a Kind"
+  | "Straight Flush"
+  | "Royal Flush";
+
 export enum CardValue {
   ACE = "A",
   TWO = "2",
