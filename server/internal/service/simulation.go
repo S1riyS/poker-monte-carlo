@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/S1riyS/poker-monte-carlo/internal/dto"
-	"github.com/S1riyS/poker-monte-carlo/pkg/logger"
 	"github.com/S1riyS/poker-monte-carlo/pkg/poker"
 )
 
@@ -30,13 +29,9 @@ func (ss *SimulationService) Run(data dto.SimulationRequest) dto.SimulationRespo
 		responseCombinationLookup[combination.Name] = &response.Data[i]
 	}
 
-	logger.Info("Running loop", mark)
-	for i := 0; i < data.Iterations; i++ {
+	for range data.Iterations {
 		combintaion, outcome := simulationStep(data)
 		responseCombination := responseCombinationLookup[combintaion.Name]
-
-		logMessage := combintaion.Name + " " + string(outcome)
-		logger.Info(logMessage, mark)
 
 		switch outcome {
 		case poker.Win:
