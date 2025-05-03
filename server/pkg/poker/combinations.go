@@ -7,17 +7,30 @@ type Combination struct {
 	Value int
 }
 
-var Combinations = []Combination{
-	{"high_card", 1},
-	{"pair", 2},
-	{"two_pairs", 3},
-	{"three_of_a_kind", 4},
-	{"straight", 5},
-	{"flush", 6},
-	{"full_house", 7},
-	{"four_of_a_kind", 8},
-	{"straight_flush", 9},
-	{"royal_flush", 10},
+var (
+	HIGH_CARD       = Combination{"high_card", 1}
+	PAIR            = Combination{"pair", 2}
+	TWO_PAIRS       = Combination{"two_pairs", 3}
+	THREE_OF_A_KIND = Combination{"three_of_a_kind", 4}
+	STRAIGHT        = Combination{"straight", 5}
+	FLUSH           = Combination{"flush", 6}
+	FULL_HOUSE      = Combination{"full_house", 7}
+	FOUR_OF_A_KIND  = Combination{"four_of_a_kind", 8}
+	STRAIGHT_FLUSH  = Combination{"straight_flush", 9}
+	ROYAL_FLUSH     = Combination{"royal_flush", 10}
+)
+
+var CombinationList = []Combination{
+	HIGH_CARD,
+	PAIR,
+	TWO_PAIRS,
+	THREE_OF_A_KIND,
+	STRAIGHT,
+	FLUSH,
+	FULL_HOUSE,
+	FOUR_OF_A_KIND,
+	STRAIGHT_FLUSH,
+	ROYAL_FLUSH,
 }
 
 type CombinationResult struct {
