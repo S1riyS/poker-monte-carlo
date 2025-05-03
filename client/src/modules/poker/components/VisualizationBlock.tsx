@@ -2,6 +2,7 @@ import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { RootState } from "src/store";
 import CombinationBreakdownChart from "./CombinationBreakdownChart";
+import CombinationsChart from "./CombinationsChart";
 import SummaryChart from "./SummaryChart";
 import WinsBreakdownChart from "./WinsBreakdownChart";
 
@@ -15,10 +16,22 @@ const VisualizationBlock = () => {
         {data ? (
           <>
             <h3>Summary</h3>
+            <h6 className="text-muted">
+              How often the hand wins, loses or ties
+            </h6>
             <SummaryChart data={data} />
+            <h3>Combinations</h3>
+            <h6 className="text-muted">
+              How often each combination appears (regardless of outcome)
+            </h6>
+            <CombinationsChart data={data} />
             <h3>Wins Breakdown</h3>
+            <h6 className="text-muted">In which combination the hand wins</h6>
             <WinsBreakdownChart data={data} />
             <h3>Combination Breakdown</h3>
+            <h6 className="text-muted">
+              Hand's outcomes for each combination it comprises
+            </h6>
             <CombinationBreakdownChart data={data} />
           </>
         ) : (
