@@ -4,7 +4,7 @@ import (
 	"github.com/S1riyS/poker-monte-carlo/internal/apperrors"
 	"github.com/S1riyS/poker-monte-carlo/internal/dto"
 	"github.com/S1riyS/poker-monte-carlo/internal/security/validation"
-	"github.com/S1riyS/poker-monte-carlo/internal/service"
+	service "github.com/S1riyS/poker-monte-carlo/internal/service/simulation"
 	"github.com/gofiber/fiber/v2"
 )
 
