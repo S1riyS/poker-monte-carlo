@@ -52,12 +52,21 @@ const WinsBreakdownChart: React.FC<WinsBreakdownChartProps> = ({ data }) => {
     );
   }, [transformedData]);
 
+  const total = useMemo(() => {
+    return data.reduce((a, b) => a + b.win, 0);
+  }, [data]);
+
   return (
-    <ResponsiveContainer width="100%" height={80}>
+    <ResponsiveContainer width="100%" height={120}>
       <BarChart layout="vertical" data={transformedData}>
         <XAxis type="number" />
         <YAxis type="category" dataKey="name" />
-        <Tooltip wrapperStyle={{ zIndex: 99999 }} />
+        <Tooltip
+          wrapperStyle={{ zIndex: 99999 }}
+          formatter={(value) =>
+            `${value} (${(((value as number) / total) * 100).toFixed(2)}%)`
+          }
+        />
         <Legend />
         {usedCombinations.map((e) => (
           <Bar key={e} dataKey={e} stackId="b" fill={COLORS[e]} />
