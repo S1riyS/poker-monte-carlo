@@ -15,7 +15,9 @@ const Navbar: React.FunctionComponent = () => {
       <Container>
         <Nav.Link as={Link} to="/">
           <BootstrapNavbar.Brand>
-            <GiPokerHand />
+            <GiPokerHand
+              style={{ fontSize: "2.5rem", verticalAlign: "middle" }}
+            />
           </BootstrapNavbar.Brand>
           {/* <BootstrapNavbar.Brand className="d-flex flex-nowrap align-items-center"> */}
         </Nav.Link>
