@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/S1riyS/poker-monte-carlo/internal/api/controller"
-	"github.com/S1riyS/poker-monte-carlo/internal/service"
+	service "github.com/S1riyS/poker-monte-carlo/internal/service/simulation"
 	"github.com/gofiber/fiber/v2"
 )
 
