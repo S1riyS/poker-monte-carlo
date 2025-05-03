@@ -27,7 +27,6 @@ export const pokerApi = createApi({
           tie: entry.Tie,
         }));
 
-        console.log("RESULT", transformed);
         return transformed;
       },
     }),

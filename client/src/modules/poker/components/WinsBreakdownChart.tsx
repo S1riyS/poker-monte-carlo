@@ -52,9 +52,6 @@ const WinsBreakdownChart: React.FC<WinsBreakdownChartProps> = ({ data }) => {
     );
   }, [transformedData]);
 
-  console.log("transformed data", transformedData);
-  console.log("used combinations", usedCombinations);
-
   return (
     <ResponsiveContainer width="100%" height={80}>
       <BarChart layout="vertical" data={transformedData}>
