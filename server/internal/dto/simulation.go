@@ -6,8 +6,9 @@ import (
 
 type SimulationRequest struct {
 	Iterations int
+	Players    int
 	Hand       poker.Hand
-	Table      *poker.Table
+	Table      []poker.Card
 }
 
 type CombinationResult struct {

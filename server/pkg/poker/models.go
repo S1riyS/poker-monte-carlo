@@ -19,3 +19,11 @@ type Card struct {
 type Hand = [2]Card
 
 type Table = [5]Card
+
+type Outcome string
+
+const (
+	Win  Outcome = "win"
+	Lose         = "lose"
+	Tie          = "tie"
+)
