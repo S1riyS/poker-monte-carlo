@@ -5,6 +5,7 @@ import CardSelector from "src/modules/poker/components/CardSelector/CardSelector
 import { Card as CardType } from "src/modules/poker/types";
 import { RootState, useAppDispatch } from "src/store";
 import {
+  removeIthComminityCard as removeIthComminityCardAction,
   resetCommunityCards as resetCommunityCardsAction,
   setCommunityCard as setCommunityCardAction,
 } from "src/store/poker.reducer";
@@ -67,6 +68,13 @@ const CommunityCardsBlock: React.FC = () => {
     return ans;
   }, [communityCards]);
 
+  const resetIthCommunityCard = useCallback(
+    (i: number) => {
+      dispatch(removeIthComminityCardAction(i));
+    },
+    [dispatch],
+  );
+
   return (
     <Card className="mb-3">
       <Card.Header>Select community cards</Card.Header>
@@ -82,7 +90,7 @@ const CommunityCardsBlock: React.FC = () => {
                 holeCard0 ?? null,
                 holeCard1 ?? null,
               ])}
-              onCardReset={() => setCommunityCard(i, null)}
+              onCardReset={() => resetIthCommunityCard(i)}
               {...cardsState[i]}
             />
           ))}

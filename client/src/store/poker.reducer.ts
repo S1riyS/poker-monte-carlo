@@ -38,6 +38,15 @@ const pokerSlice = createSlice({
     resetCommunityCards: (state) => {
       state.communityCards = Array(5).fill(null);
     },
+    removeIthComminityCard: (state, action: PayloadAction<number>) => {
+      state.communityCards[action.payload] = null;
+      if (state.communityCards.filter((e) => !!e).length >= 3) {
+        state.communityCards = state.communityCards.filter((e) => !!e);
+        state.communityCards = state.communityCards.concat(
+          Array(5 - state.communityCards.length).fill(null),
+        );
+      }
+    },
     setSimulationResult(
       state,
       action: PayloadAction<RunSimulationResponse | null>,
@@ -60,5 +69,6 @@ export const {
   setSimulationResult,
   setIterationCount,
   setPlayerCount,
+  removeIthComminityCard,
 } = pokerSlice.actions;
 export default pokerSlice.reducer;
