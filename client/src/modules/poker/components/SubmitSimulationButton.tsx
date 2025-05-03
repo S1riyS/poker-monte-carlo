@@ -13,18 +13,16 @@ const SubmitSimulationButton = () => {
     useRunSimulationMutation();
   const dispatch = useAppDispatch();
 
-  const holeCard0 = useSelector((state: RootState) => state.poker.holeCards[0]);
-  const holeCard1 = useSelector((state: RootState) => state.poker.holeCards[1]);
-  const communityCards = useSelector(
-    (state: RootState) => state.poker.communityCards,
-  );
+  const params = useSelector((state: RootState) => state.poker);
   const submitActive = useMemo(() => {
     if (isLoading) return false;
-    if (!holeCard0 || !holeCard1) return false;
-    const activeCommunityCards = communityCards.filter((e) => !!e).length;
+    if (!params.holeCards[0] || !params.holeCards[1]) return false;
+    const activeCommunityCards = params.communityCards.filter(
+      (e) => !!e,
+    ).length;
     if (0 < activeCommunityCards && activeCommunityCards < 3) return false;
     return true;
-  }, [holeCard0, holeCard1, communityCards, isLoading]);
+  }, [params, isLoading]);
 
   useEffect(() => {
     if (isError) {
@@ -45,13 +43,17 @@ const SubmitSimulationButton = () => {
   }, [data, dispatch]);
 
   const submit = useCallback(() => {
-    if (!holeCard0 || !holeCard1) return;
+    if (!params.holeCards[0] || !params.holeCards[1]) return;
     runSimulation({
-      iterations: 10,
-      hand: [cardToApiCard(holeCard0), cardToApiCard(holeCard1)],
-      table: communityCards.filter((e) => !!e).map(cardToApiCard),
+      iterations: params.iterationCount,
+      players: params.playerCount,
+      hand: [
+        cardToApiCard(params.holeCards[0]),
+        cardToApiCard(params.holeCards[1]),
+      ],
+      table: params.communityCards.filter((e) => !!e).map(cardToApiCard),
     });
-  }, [communityCards, holeCard0, holeCard1, runSimulation]);
+  }, [params, runSimulation]);
 
   return (
     <LoadingButton

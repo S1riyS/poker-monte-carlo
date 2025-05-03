@@ -7,12 +7,16 @@ interface PokerState {
   holeCards: [CardType | null, CardType | null];
   communityCards: (CardType | null)[];
   simulationResult: RunSimulationResponse | null;
+  playerCount: number;
+  iterationCount: number;
 }
 
 const initialState: PokerState = {
   holeCards: [null, null],
   communityCards: Array(5).fill(null),
   simulationResult: null,
+  playerCount: 3,
+  iterationCount: 1000,
 };
 
 const pokerSlice = createSlice({
@@ -40,6 +44,12 @@ const pokerSlice = createSlice({
     ) {
       state.simulationResult = action.payload;
     },
+    setPlayerCount(state, action: PayloadAction<number>) {
+      state.playerCount = action.payload;
+    },
+    setIterationCount(state, action: PayloadAction<number>) {
+      state.iterationCount = action.payload;
+    },
   },
 });
 
@@ -48,5 +58,7 @@ export const {
   setCommunityCard,
   resetCommunityCards,
   setSimulationResult,
+  setIterationCount,
+  setPlayerCount,
 } = pokerSlice.actions;
 export default pokerSlice.reducer;

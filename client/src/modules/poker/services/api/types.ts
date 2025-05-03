@@ -22,6 +22,7 @@ export type ApiCard = {
 
 export type RunSimulationRequest = {
   iterations: number;
+  players: number;
   hand: ApiCard[];
   table?: ApiCard[];
 };
