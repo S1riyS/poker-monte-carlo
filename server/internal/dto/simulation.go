@@ -7,7 +7,7 @@ import (
 type SimulationRequest struct {
 	Iterations int
 	Players    int
-	Hand       poker.Hand
+	Hand       []poker.Card
 	Table      []poker.Card
 }
 
