@@ -18,9 +18,14 @@ type Simulation struct {
 	pool CardPool
 }
 
+type StepResult struct {
+	Combination poker.Combination
+	Outcome     Outcome
+}
+
 func NewSimulation(data dto.SimulationRequest) *Simulation {
 	// Setup known cards
-	knownCards := make([]poker.Card, len(data.Hand)+len(data.Table))
+	var knownCards []poker.Card
 	knownCards = append(knownCards, data.Hand...)
 	knownCards = append(knownCards, data.Table...)
 
@@ -35,7 +40,9 @@ func NewSimulation(data dto.SimulationRequest) *Simulation {
 
 // RunStep runs 1 step of a simulation.
 // Reciever function uses value instead of reference in order to reuse CardPool
-func (s Simulation) RunStep() (poker.Combination, Outcome) {
+func (s Simulation) RunStep() StepResult {
+	s.pool.ShuffleDeck()
+
 	// Fill table with missing cards
 	simulationTable := s.data.Table
 	missingCount := 5 - len(simulationTable)
@@ -64,13 +71,13 @@ func (s Simulation) RunStep() (poker.Combination, Outcome) {
 		comparison := poker.CompareResults(ourResult, playerResult)
 		// Fail fast. If there is at least 1 stronger hand - Lose
 		if comparison < 0 {
-			return ourResult.Combination, lose
+			return StepResult{ourResult.Combination, lose}
 		}
 		outcomeMaxDiff = max(outcomeMaxDiff, comparison)
 	}
 
 	if outcomeMaxDiff > 0 {
-		return ourResult.Combination, win
+		return StepResult{ourResult.Combination, win}
 	}
-	return ourResult.Combination, tie
+	return StepResult{ourResult.Combination, tie}
 }

@@ -5,12 +5,12 @@ import (
 	"time"
 )
 
-// Generate a random permutation of numbers from 1 to n
+// Generate a random permutation of numbers from 0 to n-1
 func getPermutation(n int) []int {
-	// Create a slice with numbers 1 to n
+	// Create a slice with numbers 0 to n-1
 	perm := make([]int, n)
 	for i := range perm {
-		perm[i] = i + 1
+		perm[i] = i
 	}
 
 	// Seed the random number generator

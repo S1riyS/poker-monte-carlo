@@ -22,7 +22,8 @@ func NewCardPool(knownCards ...poker.Card) *CardPool {
 	poolSize := poker.DECK_SIZE - len(knownCards)
 
 	// Setup key CardPool fields
-	pool := make([]poker.Card, poolSize)
+	// pool := make([]poker.Card, poolSize)
+	var pool []poker.Card
 	permutation := getPermutation(poolSize)
 
 	// Fill pool
@@ -64,4 +65,8 @@ func (cp *CardPool) PickOne() poker.Card {
 	cp.permutationPoiner += 1
 
 	return result
+}
+
+func (cp *CardPool) ShuffleDeck() {
+	cp.permutation = getPermutation(len(cp.pool))
 }

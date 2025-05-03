@@ -30,10 +30,10 @@ func (ss *SimulationService) Run(data dto.SimulationRequest) dto.SimulationRespo
 	simulation := NewSimulation(data)
 
 	for range data.Iterations {
-		combintaion, outcome := simulation.RunStep()
-		responseCombination := responseCombinationLookup[combintaion.Name]
+		result := simulation.RunStep()
+		responseCombination := responseCombinationLookup[result.Combination.Name]
 
-		switch outcome {
+		switch result.Outcome {
 		case win:
 			responseCombination.Win += 1
 		case lose:
