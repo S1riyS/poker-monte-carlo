@@ -23,7 +23,7 @@ func InitValidator() {
 	})
 
 	// Application specific validation functions
-	// Add here
+	validatorInstance.RegisterValidation(poker_suit_enum_name, validatePokerSuitEnum)
 }
 
 func Validate(data any) error {
@@ -56,13 +56,25 @@ func getCustomErrorMessage(err validator.FieldError) string {
 	tag := err.Tag()
 	params := err.Param()
 
+	var sizeName string
+	switch err.Kind() {
+	case reflect.Slice, reflect.String:
+		sizeName = "length"
+	case reflect.Int, reflect.Float32, reflect.Float64:
+		sizeName = "value"
+	default:
+		sizeName = "size"
+	}
+
 	switch tag {
 	case "required":
 		return fmt.Sprintf("%s is required", field)
 	case "min":
-		return fmt.Sprintf("%s must be at least %v characters long", field, params)
+		return fmt.Sprintf("%s of %s must be at least %v", sizeName, field, params)
 	case "max":
-		return fmt.Sprintf("%s must be at most %v characters long", field, params)
+		return fmt.Sprintf("%s of %s must be at most %v", sizeName, field, params)
+	case "len":
+		return fmt.Sprintf("%s of %s must be %v", sizeName, field, params)
 	case "gte":
 		return fmt.Sprintf("%s must be greater than or equal to %v", field, params)
 	case "lte":
