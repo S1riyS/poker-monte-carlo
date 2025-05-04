@@ -1,6 +1,8 @@
 package simulation
 
 import (
+	"runtime"
+
 	"github.com/S1riyS/poker-monte-carlo/internal/dto"
 	"github.com/S1riyS/poker-monte-carlo/internal/mapper"
 	"github.com/S1riyS/poker-monte-carlo/pkg/poker"
@@ -23,11 +25,12 @@ func NewSimulationService() ISimulationService {
 func (ss *simulationService) Run(data dto.SimulationRequest) dto.SimulationResponse {
 	const mark = "service.simulation.Run"
 
-	// Lookup table to retrieve combinationsfrom response object faster
-	var responseCombinationLookup = make(map[string]*dto.CombinationResult, len(poker.CombinationList))
 	// Response object
 	var response dto.SimulationResponse
 	response.Data = make([]dto.CombinationResult, len(poker.CombinationList))
+	// Lookup table to retrieve combinationsfrom response object faster
+	var responseCombinationLookup = make(map[string]*dto.CombinationResult, len(poker.CombinationList))
+
 	// Fill response object and lookup table
 	for i, combination := range poker.CombinationList {
 		response.Data[i] = dto.CombinationResult{
@@ -39,18 +42,34 @@ func (ss *simulationService) Run(data dto.SimulationRequest) dto.SimulationRespo
 		responseCombinationLookup[combination.Name] = &response.Data[i]
 	}
 
-	// Run simulation
+	// Setup simulation
 	simulation := NewSimulation(
-		data.Iterations,
 		data.Players,
 		ss.mapper2pkg.MapEach(data.Hand),
 		ss.mapper2pkg.MapEach(data.Table),
 	)
 
-	for range data.Iterations {
-		result := simulation.RunStep()
-		responseCombination := responseCombinationLookup[result.Combination.Name]
+	// Setup channels
+	numWorkers := runtime.NumCPU() * 2
+	jobs := make(chan int, data.Iterations)
+	results := make(chan StepResult, data.Iterations)
 
+	// Initialize worker pool
+	for range numWorkers {
+		go worker(jobs, results, simulation)
+	}
+
+	// Send jobs IDs
+	for j := 1; j <= data.Iterations; j++ {
+		jobs <- j
+	}
+	close(jobs)
+
+	// Collect results
+	for i := 1; i <= data.Iterations; i++ {
+		result := <-results
+
+		responseCombination := responseCombinationLookup[result.Combination.Name]
 		switch result.Outcome {
 		case win:
 			responseCombination.Win += 1
@@ -60,5 +79,14 @@ func (ss *simulationService) Run(data dto.SimulationRequest) dto.SimulationRespo
 			responseCombination.Tie += 1
 		}
 	}
+	close(results)
+
 	return response
+}
+
+// worker is a WorkerPool unit that performs job
+func worker(jobs <-chan int, results chan<- StepResult, simulation *Simulation) {
+	for range jobs {
+		results <- simulation.RunStep()
+	}
 }
