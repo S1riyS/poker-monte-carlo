@@ -17,9 +17,9 @@ type SimulationRequest struct {
 	// Number of other players at the table
 	Players int `json:"players" validate:"required,min=1,max=10" example:"5"`
 	// Starting hand
-	Hand []SimulationCard `json:"hand" validate:"required,len=2"`
+	Hand []SimulationCard `json:"hand" validate:"required,len=2,dive"`
 	// Cards on the table (flop, turn & river)
-	Table []SimulationCard `json:"table" validate:"required,max=5"`
+	Table []SimulationCard `json:"table" validate:"required,max=5,dive"`
 }
 
 type CombinationResult struct {
