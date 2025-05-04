@@ -2,6 +2,8 @@ import {
   CardSuit,
   CardValue,
   CardValueCharacter,
+  CardValueInt,
+  GeneralPokerHand,
   PokerCombination,
   PokerCombinationName,
 } from "../types";
@@ -21,6 +23,7 @@ export const SORTED_VALUES = [
   CardValue.KING,
   CardValue.ACE,
 ];
+export const REVERSED_VALUES = [...SORTED_VALUES].reverse();
 
 export const SORTED_SUITS = [
   CardSuit.HEARTS,
@@ -69,7 +72,41 @@ export function combinationToHumanName(
   }
 }
 
-export function valueToCharacter(value: CardValue): CardValueCharacter {
+export function cardValueToInt(value: CardValue): CardValueInt {
+  switch (value) {
+    case CardValue.ACE:
+      return 14;
+    case CardValue.KING:
+      return 13;
+    case CardValue.QUEEN:
+      return 12;
+    case CardValue.JACK:
+      return 11;
+    case CardValue.TEN:
+      return 10;
+    case CardValue.NINE:
+      return 9;
+    case CardValue.EIGHT:
+      return 8;
+    case CardValue.SEVEN:
+      return 7;
+    case CardValue.SIX:
+      return 6;
+    case CardValue.FIVE:
+      return 5;
+    case CardValue.FOUR:
+      return 4;
+    case CardValue.THREE:
+      return 3;
+    case CardValue.TWO:
+      return 2;
+  }
+}
+
+export function valueToCharacter(
+  value: CardValue,
+  tenAsT: boolean = false,
+): CardValueCharacter {
   switch (value) {
     case CardValue.ACE:
       return "A";
@@ -80,7 +117,7 @@ export function valueToCharacter(value: CardValue): CardValueCharacter {
     case CardValue.JACK:
       return "J";
     case CardValue.TEN:
-      return "10";
+      return tenAsT ? "T" : "10";
     case CardValue.NINE:
       return "9";
     case CardValue.EIGHT:
@@ -98,4 +135,21 @@ export function valueToCharacter(value: CardValue): CardValueCharacter {
     case CardValue.TWO:
       return "2";
   }
+}
+
+export function generalPokerHandToString(hand: GeneralPokerHand): string {
+  const { value0, value1, suited } = hand;
+  let ans = "";
+  ans += valueToCharacter(
+    cardValueToInt(value0) > cardValueToInt(value1) ? value0 : value1,
+    true,
+  );
+  ans += valueToCharacter(
+    cardValueToInt(value0) <= cardValueToInt(value1) ? value0 : value1,
+    true,
+  );
+  if (value0 !== value1) {
+    ans += suited ? "s" : "o";
+  }
+  return ans;
 }

@@ -34,16 +34,6 @@ const CombinationBreakdownChart: React.FC<CombinationBreakdownChartProps> = ({
     }));
   }, [data]);
 
-  console.log(
-    "totals",
-    transformedData.reduce((a, b) => {
-      return {
-        ...a,
-        [b.name]: b.wins + b.losses + b.ties,
-      };
-    }, {}),
-  );
-
   const totals: { [K in PokerCombinationName]: number } = useMemo(() => {
     return transformedData.reduce((a, b) => {
       return {

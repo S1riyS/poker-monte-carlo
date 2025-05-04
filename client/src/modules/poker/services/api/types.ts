@@ -1,19 +1,4 @@
-import { Card as CardType, PokerCombination } from "../../types";
-
-export type CardValueInt =
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12
-  | 13
-  | 14;
+import { Card as CardType, CardValueInt, PokerCombination } from "../../types";
 
 export type ApiCard = {
   rank: CardValueInt;

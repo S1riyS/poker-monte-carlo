@@ -7,6 +7,7 @@ interface ValueIconProps extends React.HTMLAttributes<HTMLSpanElement> {
   underlineAmbigous?: boolean;
   flipped?: boolean;
   textAlign?: "left" | "center" | "right";
+  tenAsT?: boolean;
 }
 
 const ValueIcon: React.FC<ValueIconProps> = ({
@@ -14,6 +15,7 @@ const ValueIcon: React.FC<ValueIconProps> = ({
   underlineAmbigous,
   flipped,
   textAlign,
+  tenAsT,
   ...props
 }) => {
   return (
@@ -32,7 +34,7 @@ const ValueIcon: React.FC<ValueIconProps> = ({
         ...props.style,
       }}
     >
-      {valueToCharacter(value)}
+      {valueToCharacter(value, tenAsT)}
     </span>
   );
 };

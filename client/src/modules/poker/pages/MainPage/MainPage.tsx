@@ -1,4 +1,9 @@
+import { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { useLocation } from "react-router";
+import { Card as CardType } from "src/modules/poker/types";
+import { useAppDispatch } from "src/store";
+import { setHoleCard } from "src/store/poker.reducer";
 import CommunityCardsBlock from "../../components/CommunityCardsBlock";
 import HoleCardsBlock from "../../components/HoleCardsBlock";
 import SimulationSettingsForm from "../../components/SimulationSettingsForm";
@@ -6,6 +11,26 @@ import SubmitSimulationButton from "../../components/SubmitSimulationButton";
 import VisualizationBlock from "../../components/VisualizationBlock";
 
 const MainPage = () => {
+  const location = useLocation();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const state = location.state as {
+      holeCards?: [CardType, CardType];
+      autoRun?: boolean;
+    };
+
+    if (state?.holeCards) {
+      dispatch(setHoleCard({ index: 0, card: state.holeCards[0] }));
+      dispatch(setHoleCard({ index: 1, card: state.holeCards[1] }));
+    }
+
+    if (state?.autoRun) {
+      // optional: trigger click on SubmitSimulationButton programmatically
+      document.getElementById("submit-sim-btn")?.click();
+    }
+  }, [location, dispatch]);
+
   return (
     <Container>
       <h2>Main Page</h2>

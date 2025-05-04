@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Navbar as BootstrapNavbar, Container, Nav } from "react-bootstrap";
+import { CiViewTable } from "react-icons/ci";
 import { GiBigGear, GiCardRandom, GiPokerHand } from "react-icons/gi";
 import { Link } from "react-router";
 
@@ -30,6 +31,9 @@ const Navbar: React.FunctionComponent = () => {
             <div className="d-flex flex-wrap">
               <Nav.Link as={Link} to="/">
                 <GiCardRandom /> Главная
+              </Nav.Link>
+              <Nav.Link as={Link} to="/table">
+                <CiViewTable /> Таблица рук
               </Nav.Link>
               <Nav.Link as={Link} to="/settings">
                 <GiBigGear /> Настройки
