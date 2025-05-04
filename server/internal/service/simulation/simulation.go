@@ -13,11 +13,10 @@ const (
 )
 
 type Simulation struct {
-	iterations int
-	players    int
-	hand       []poker.Card
-	table      []poker.Card
-	pool       CardPool
+	players int
+	hand    []poker.Card
+	table   []poker.Card
+	pool    CardPool
 }
 
 type StepResult struct {
@@ -25,9 +24,8 @@ type StepResult struct {
 	Outcome     Outcome
 }
 
-func NewSimulation(iterations int, players int, hand []poker.Card, table []poker.Card) *Simulation {
+func NewSimulation(players int, hand []poker.Card, table []poker.Card) *Simulation {
 	// Setup known cards
-	// TODO: return to original allocation and fix assignment
 	var knownCards []poker.Card
 	knownCards = append(knownCards, hand...)
 	knownCards = append(knownCards, table...)
@@ -36,11 +34,10 @@ func NewSimulation(iterations int, players int, hand []poker.Card, table []poker
 	pool := NewCardPool(knownCards...)
 
 	return &Simulation{
-		iterations: iterations,
-		players:    players,
-		hand:       hand,
-		table:      table,
-		pool:       *pool,
+		players: players,
+		hand:    hand,
+		table:   table,
+		pool:    *pool,
 	}
 }
 
