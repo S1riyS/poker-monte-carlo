@@ -1,9 +1,36 @@
 .hand-table {
-  width: auto;
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  grid-template-rows: repeat(13, 1fr);
+  aspect-ratio: 1 / 1;
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-/* .hand-table td {
-  aspect-ratio: 1 / 1;
-  vertical-align: middle;
-  padding: 0.75rem;
-} */
+.hand-table tbody {
+  display: contents;
+}
+
+.hand-table tr {
+  display: contents;
+}
+
+.hand-table td {
+  position: relative;
+  padding: 0;
+  border: 1px solid white;
+  border-radius: 0.375rem;
+}
+
+.hand-table td > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(12px, 1vw, 90%);
+}

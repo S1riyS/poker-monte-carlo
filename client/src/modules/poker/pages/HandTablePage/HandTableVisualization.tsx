@@ -20,7 +20,6 @@ const HandTableVisualization: React.FC<HandTableVisualizationProps> = ({
       <Card.Header>{t("pages.handTable.visualization")}</Card.Header>
       <Card.Body>
         <Table
-          bordered
           className="hand-table mx-auto"
           style={{ tableLayout: "fixed", textAlign: "center" }}
         >

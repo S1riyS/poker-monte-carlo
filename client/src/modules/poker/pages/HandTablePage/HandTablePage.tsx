@@ -105,7 +105,7 @@ const HandTablePage = () => {
     <Container>
       <h2 className="my-3">{t("pages.handTable.title")}</h2>
       <Row>
-        <Col md={6} lg={4}>
+        <Col md={4} lg={4}>
           <SimulationSettingsForm />
           <hr />
           <LoadingButton onClick={simulateAll} isLoading={loadingCount !== 0}>
@@ -113,7 +113,7 @@ const HandTablePage = () => {
           </LoadingButton>
         </Col>
 
-        <Col md={6} lg={8}>
+        <Col md={8} lg={8}>
           <HandTableVisualization stats={stats} />
         </Col>
       </Row>
