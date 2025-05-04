@@ -25,15 +25,13 @@ export const pokerApi = createApi({
         } as RawRunSimulationRequest,
       }),
       transformResponse: (data) => {
-        const raw = (data as { Data: RawSimulationEntry[] }).Data;
-
+        const raw = (data as { data: RawSimulationEntry[] }).data;
         const transformed: RunSimulationResponse = raw.map((entry) => ({
-          name: entry.Name.toUpperCase() as RunSimulationResponse[number]["name"],
-          win: entry.Win,
-          lose: entry.Lose,
-          tie: entry.Tie,
+          name: entry.name.toUpperCase() as RunSimulationResponse[number]["name"],
+          win: entry.win,
+          lose: entry.lose,
+          tie: entry.tie,
         }));
-
         return transformed;
       },
     }),

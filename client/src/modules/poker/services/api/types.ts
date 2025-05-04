@@ -43,8 +43,8 @@ export type RunSimulationResponse = {
 
 // compatibility util
 export type RawSimulationEntry = {
-  Name: string;
-  Win: number;
-  Lose: number;
-  Tie: number;
+  name: string;
+  win: number;
+  lose: number;
+  tie: number;
 };
