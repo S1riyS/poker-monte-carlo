@@ -29,6 +29,12 @@ const pokerSlice = createSlice({
     ) => {
       state.holeCards[action.payload.index] = action.payload.card;
     },
+    setHoleCards: (
+      state,
+      action: PayloadAction<{ holeCards: [CardType | null, CardType | null] }>,
+    ) => {
+      state.holeCards = action.payload.holeCards;
+    },
     setCommunityCard: (
       state,
       action: PayloadAction<{ index: number; card: CardType | null }>,
@@ -64,6 +70,7 @@ const pokerSlice = createSlice({
 
 export const {
   setHoleCard,
+  setHoleCards,
   setCommunityCard,
   resetCommunityCards,
   setSimulationResult,

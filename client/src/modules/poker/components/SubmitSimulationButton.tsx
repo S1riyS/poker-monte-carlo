@@ -53,6 +53,7 @@ const SubmitSimulationButton = () => {
 
   return (
     <LoadingButton
+      id="submit-sim-btn"
       isLoading={isLoading}
       type="submit"
       variant="primary"

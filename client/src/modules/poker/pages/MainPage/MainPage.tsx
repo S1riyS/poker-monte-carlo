@@ -3,7 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useLocation } from "react-router";
 import { Card as CardType } from "src/modules/poker/types";
 import { useAppDispatch } from "src/store";
-import { setHoleCard } from "src/store/poker.reducer";
+import { setHoleCards } from "src/store/poker.reducer";
 import CommunityCardsBlock from "../../components/CommunityCardsBlock";
 import HoleCardsBlock from "../../components/HoleCardsBlock";
 import SimulationSettingsForm from "../../components/SimulationSettingsForm";
@@ -20,13 +20,13 @@ const MainPage = () => {
       autoRun?: boolean;
     };
 
-    if (state?.holeCards) {
-      dispatch(setHoleCard({ index: 0, card: state.holeCards[0] }));
-      dispatch(setHoleCard({ index: 1, card: state.holeCards[1] }));
+    if (state?.holeCards && state.holeCards[0] && state.holeCards[1]) {
+      dispatch(
+        setHoleCards({ holeCards: [state.holeCards[0], state.holeCards[1]] }),
+      );
     }
 
     if (state?.autoRun) {
-      // optional: trigger click on SubmitSimulationButton programmatically
       document.getElementById("submit-sim-btn")?.click();
     }
   }, [location, dispatch]);

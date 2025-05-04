@@ -74,7 +74,6 @@ const HandTableCell: React.FC<HandTableCellProps> = ({
   );
 
   const handleClick = () => {
-    if (!stat) return;
     navigate("/", {
       state: {
         holeCards: [
