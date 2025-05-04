@@ -22,6 +22,7 @@ const ValueIcon: React.FC<ValueIconProps> = ({
       style={{
         lineHeight: "1",
         textAlign: textAlign || props.style?.textAlign,
+        fontFamily: props.style?.fontFamily || "Abril Fatface, cursive",
         textDecorationLine:
           underlineAmbigous &&
           (value === CardValue.SIX || value === CardValue.NINE)

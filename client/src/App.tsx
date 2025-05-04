@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import AppRouter from "src/modules/common/utils/AppRouter";
+import "./App.css";
 import Navbar from "./modules/common/components/Navbar";
 import store, { persistor } from "./store";
 
