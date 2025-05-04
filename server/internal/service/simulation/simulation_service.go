@@ -2,12 +2,25 @@ package simulation
 
 import (
 	"github.com/S1riyS/poker-monte-carlo/internal/dto"
+	"github.com/S1riyS/poker-monte-carlo/internal/mapper"
 	"github.com/S1riyS/poker-monte-carlo/pkg/poker"
 )
 
-type SimulationService struct{}
+type ISimulationService interface {
+	Run(data dto.SimulationRequest) dto.SimulationResponse
+}
 
-func (ss *SimulationService) Run(data dto.SimulationRequest) dto.SimulationResponse {
+type simulationService struct {
+	mapper2pkg mapper.MapFunc[dto.SimulationCard, poker.Card]
+}
+
+func NewSimulationService() ISimulationService {
+	return &simulationService{
+		mapper2pkg: mapper.Card2PkgMapper,
+	}
+}
+
+func (ss *simulationService) Run(data dto.SimulationRequest) dto.SimulationResponse {
 	const mark = "service.simulation.Run"
 
 	// Lookup table to retrieve combinationsfrom response object faster
@@ -27,7 +40,12 @@ func (ss *SimulationService) Run(data dto.SimulationRequest) dto.SimulationRespo
 	}
 
 	// Run simulation
-	simulation := NewSimulation(data)
+	simulation := NewSimulation(
+		data.Iterations,
+		data.Players,
+		ss.mapper2pkg.MapEach(data.Hand),
+		ss.mapper2pkg.MapEach(data.Table),
+	)
 
 	for range data.Iterations {
 		result := simulation.RunStep()

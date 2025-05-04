@@ -22,6 +22,7 @@ func NewCardPool(knownCards ...poker.Card) *CardPool {
 	poolSize := poker.DECK_SIZE - len(knownCards)
 
 	// Setup key CardPool fields
+	// TODO: return to original allocation and fix assignment
 	// pool := make([]poker.Card, poolSize)
 	var pool []poker.Card
 	permutation := getPermutation(poolSize)

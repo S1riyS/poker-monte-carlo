@@ -9,7 +9,7 @@ import (
 )
 
 type SimulationController struct {
-	SimulationService service.SimulationService
+	SimulationService service.ISimulationService
 }
 
 // Login - authenticate user and provide new pair of tokens

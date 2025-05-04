@@ -7,7 +7,7 @@ import (
 )
 
 func NewSimulationRouter(group fiber.Router) {
-	ss := service.SimulationService{}
+	ss := service.NewSimulationService()
 	sc := controller.SimulationController{SimulationService: ss}
 	group.Post("/simulation", sc.Simulate)
 }

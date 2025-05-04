@@ -1,7 +1,6 @@
 package simulation
 
 import (
-	"github.com/S1riyS/poker-monte-carlo/internal/dto"
 	"github.com/S1riyS/poker-monte-carlo/pkg/poker"
 )
 
@@ -14,8 +13,11 @@ const (
 )
 
 type Simulation struct {
-	data dto.SimulationRequest
-	pool CardPool
+	iterations int
+	players    int
+	hand       []poker.Card
+	table      []poker.Card
+	pool       CardPool
 }
 
 type StepResult struct {
@@ -23,18 +25,22 @@ type StepResult struct {
 	Outcome     Outcome
 }
 
-func NewSimulation(data dto.SimulationRequest) *Simulation {
+func NewSimulation(iterations int, players int, hand []poker.Card, table []poker.Card) *Simulation {
 	// Setup known cards
+	// TODO: return to original allocation and fix assignment
 	var knownCards []poker.Card
-	knownCards = append(knownCards, data.Hand...)
-	knownCards = append(knownCards, data.Table...)
+	knownCards = append(knownCards, hand...)
+	knownCards = append(knownCards, table...)
 
 	// Setup card pool
 	pool := NewCardPool(knownCards...)
 
 	return &Simulation{
-		data: data,
-		pool: *pool,
+		iterations: iterations,
+		players:    players,
+		hand:       hand,
+		table:      table,
+		pool:       *pool,
 	}
 }
 
@@ -44,7 +50,7 @@ func (s Simulation) RunStep() StepResult {
 	s.pool.ShuffleDeck()
 
 	// Fill table with missing cards
-	simulationTable := s.data.Table
+	simulationTable := s.table
 	missingCount := 5 - len(simulationTable)
 	if missingCount == 1 {
 		simulationTable = append(simulationTable, s.pool.PickOne())
@@ -58,12 +64,12 @@ func (s Simulation) RunStep() StepResult {
 	copy(cards[0:5], simulationTable)
 
 	// Simulate our hand
-	copy(cards[5:7], s.data.Hand)
+	copy(cards[5:7], s.hand)
 	ourResult := poker.Evaluate(cards...)
 
 	// Simulate others hands
 	var outcomeMaxDiff int
-	for range s.data.Players {
+	for range s.players {
 		playerHand := s.pool.PickMany(2)
 		copy(cards[5:7], playerHand)
 		playerResult := poker.Evaluate(cards...)
