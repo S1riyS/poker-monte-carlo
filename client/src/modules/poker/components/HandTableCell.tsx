@@ -59,13 +59,13 @@ const HandTableCell: React.FC<HandTableCellProps> = ({
         {stat ? (
           <>
             <div style={{ color: "green" }}>
-              Win: {stat.win} ({winPct.toFixed(2)}%)
+              {t('poker.outcomes.wins')}: {stat.win} ({winPct.toFixed(2)}%)
             </div>
             <div style={{ color: "crimson" }}>
-              Lose: {stat.lose} ({losePct.toFixed(2)}%)
+              {t('poker.outcomes.loses')}: {stat.lose} ({losePct.toFixed(2)}%)
             </div>
             <div style={{ color: "gray" }}>
-              Tie: {stat.tie} ({tiePct.toFixed(2)}%)
+              {t('poker.outcomes.ties')}: {stat.tie} ({tiePct.toFixed(2)}%)
             </div>
           </>
         ) : (
