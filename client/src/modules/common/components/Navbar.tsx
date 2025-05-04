@@ -1,10 +1,13 @@
 import * as React from "react";
 import { Navbar as BootstrapNavbar, Container, Nav } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { CiViewTable } from "react-icons/ci";
 import { GiBigGear, GiCardRandom, GiPokerHand } from "react-icons/gi";
 import { Link } from "react-router";
 
 const Navbar: React.FunctionComponent = () => {
+  const { t } = useTranslation();
+
   return (
     <BootstrapNavbar
       id="navbar"
@@ -30,13 +33,13 @@ const Navbar: React.FunctionComponent = () => {
           <Nav className="d-flex justify-content-between flex-row w-100">
             <div className="d-flex flex-wrap">
               <Nav.Link as={Link} to="/">
-                <GiCardRandom /> Главная
+                <GiCardRandom /> {t("pages.main.name")}
               </Nav.Link>
               <Nav.Link as={Link} to="/table">
-                <CiViewTable /> Таблица рук
+                <CiViewTable /> {t("pages.handTable.name")}
               </Nav.Link>
               <Nav.Link as={Link} to="/settings">
-                <GiBigGear /> Настройки
+                <GiBigGear /> {t("pages.settings.name")}
               </Nav.Link>
             </div>
           </Nav>

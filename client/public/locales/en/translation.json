@@ -1,0 +1,93 @@
+{
+  "pages": {
+    "main": {
+      "name": "Main Page",
+      "title": "Poker Monte Carlo",
+      "visualization": "Visualization",
+      "selectHoleCards": "Select hole cards",
+      "selectCommunityCards": "Select community cards",
+      "simulationSettings": {
+        "name": "Simulation Settings",
+        "playerCount": "Player count",
+        "iterationCount": "Iteration count"
+      },
+      "runSimulation": "Simulate",
+      "result": "Result",
+      "charts": {
+        "summary": {
+          "name": "Summary",
+          "description": "How often the hand wins, loses or ties"
+        },
+        "combinations": {
+          "name": "Combinations",
+          "description": "How often each combination appears (regardless of outcome)"
+        },
+        "winsBreakdown": {
+          "name": "Wins Breakdown",
+          "description": "In which combination the hand wins"
+        },
+        "combinationBreakdown": {
+          "name": "Combination Breakdown",
+          "description": "Hand's outcomes for each combination it comprises"
+        }
+      }
+    },
+    "settings": {
+      "name": "Settings",
+      "title": "Settings",
+      "cardStyle": {
+        "title": "Card style",
+        "simple": "Simple",
+        "mirrored": "Mirrored"
+      },
+      "deckColors": {
+        "title": "Deck colors",
+        "2colors": "2 colors",
+        "4colors": "4 colors"
+      },
+      "language": "Language"
+    },
+    "handTable": {
+      "name": "Hand Table",
+      "title": "Hand Table",
+      "simulateAll": "Simulate all",
+      "visualization": "Hand Table Visualization"
+    }
+  },
+  "poker": {
+    "selectCard": "Select card",
+    "outcome": {
+      "name": "Outcome",
+      "win": "Win",
+      "lose": "Lose",
+      "tie": "Tie"
+    },
+    "outcomes": {
+      "name": "Outcomes",
+      "wins": "Wins",
+      "loses": "Losses",
+      "ties": "Ties"
+    },
+    "combination": {
+      "ROYAL_FLUSH": "Royal Flush",
+      "STRAIGHT_FLUSH": "Straight Flush",
+      "FOUR_OF_A_KIND": "Four of a Kind",
+      "FULL_HOUSE": "Full House",
+      "FLUSH": "Flush",
+      "STRAIGHT": "Straight",
+      "THREE_OF_A_KIND": "Three of a Kind",
+      "TWO_PAIRS": "Two Pairs",
+      "PAIR": "Pair",
+      "HIGH_CARD": "High Card"
+    }
+  },
+  "common": {
+    "reset": "Reset",
+    "noData": "No data",
+    "loading": "Loading...",
+    "notFound": "Not found",
+    "number": "Number",
+    "enable": "Enable",
+    "checkConsoleForMoreInfo": "Check console for more info"
+  }
+}

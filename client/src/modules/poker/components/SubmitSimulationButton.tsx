@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { GenericApiError } from "src/modules/common/api/types";
 import LoadingButton from "src/modules/common/components/LoadingButton";
@@ -8,6 +9,8 @@ import { setSimulationResult } from "src/store/poker.reducer";
 import { useRunSimulationMutation } from "../services/api/api";
 
 const SubmitSimulationButton = () => {
+  const { t } = useTranslation();
+
   const [runSimulation, { data, isLoading, isError, error }] =
     useRunSimulationMutation();
   const dispatch = useAppDispatch();
@@ -29,11 +32,12 @@ const SubmitSimulationButton = () => {
       if ("data" in error) {
         toast.error(
           (error.data as GenericApiError).title +
-            " (check console for more info)",
+            ". " +
+            t("common.checkConsoleForMoreInfo"),
         );
       }
     }
-  }, [isError, error]);
+  }, [isError, error, t]);
 
   useEffect(() => {
     if (data) {
@@ -60,7 +64,7 @@ const SubmitSimulationButton = () => {
       disabled={!submitActive}
       onClick={submit}
     >
-      Submit
+      {t("pages.main.runSimulation")}
     </LoadingButton>
   );
 };

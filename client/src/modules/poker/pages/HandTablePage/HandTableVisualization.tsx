@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Table } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import HandTableCell from "../../components/HandTableCell";
 import { Stat } from "../../types";
 import { REVERSED_VALUES } from "../../utils/utils";
@@ -12,9 +13,11 @@ interface HandTableVisualizationProps {
 const HandTableVisualization: React.FC<HandTableVisualizationProps> = ({
   stats,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Card>
-      <Card.Header>Hand Table</Card.Header>
+      <Card.Header>{t("pages.handTable.visualization")}</Card.Header>
       <Card.Body>
         <Table
           bordered

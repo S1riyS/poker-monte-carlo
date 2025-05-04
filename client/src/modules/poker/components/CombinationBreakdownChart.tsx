@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Bar,
   BarChart,
@@ -9,12 +10,11 @@ import {
   YAxis,
 } from "recharts";
 import { RunSimulationResponse } from "../services/api/types";
-import { PokerCombinationName } from "../types";
-import { combinationToHumanName } from "../utils/utils";
+import { PokerCombination } from "../types";
 
 const COLORS = {
   wins: "green",
-  losses: "crimson",
+  loses: "crimson",
   ties: "gray",
 };
 
@@ -25,40 +25,51 @@ type CombinationBreakdownChartProps = {
 const CombinationBreakdownChart: React.FC<CombinationBreakdownChartProps> = ({
   data,
 }) => {
+  const { t } = useTranslation();
+
   const transformedData = useMemo(() => {
     return data.map((e) => ({
-      name: combinationToHumanName(e.name),
+      name: e.name,
       wins: e.win,
-      losses: e.lose,
+      loses: e.lose,
       ties: e.tie,
     }));
   }, [data]);
 
-  const totals: { [K in PokerCombinationName]: number } = useMemo(() => {
+  const totals: { [K in PokerCombination]: number } = useMemo(() => {
     return transformedData.reduce((a, b) => {
       return {
         ...a,
-        [b.name]: b.wins + b.losses + b.ties,
+        [b.name]: b.wins + b.loses + b.ties,
       };
-    }, {}) as { [K in PokerCombinationName]: number };
+    }, {}) as { [K in PokerCombination]: number };
   }, [transformedData]);
 
   return (
     <ResponsiveContainer width="100%" height={40 + transformedData.length * 40}>
       <BarChart layout="vertical" data={transformedData}>
         <XAxis type="number" />
-        <YAxis type="category" dataKey="name" />
+        <YAxis
+          type="category"
+          dataKey="name"
+          tickFormatter={(v) => t("poker.combination." + v)}
+        />
         <Tooltip
           wrapperStyle={{ zIndex: 99999 }}
-          formatter={(value, _, item) => {
-            const total = totals[item.payload.name as PokerCombinationName];
-            if (!total) return value;
-            return `${value} (${(((value as number) / total) * 100).toFixed(2)}%)`;
+          labelFormatter={(value) => t("poker.combination." + value)}
+          formatter={(value, name, item) => {
+            const total = totals[item.payload.name as PokerCombination];
+            return [
+              total
+                ? `${value} (${(((value as number) / total) * 100).toFixed(2)}%)`
+                : value,
+              t("poker.outcomes." + name),
+            ];
           }}
         />
-        <Legend />
+        <Legend formatter={(value) => t("poker.outcomes." + value)} />
         <Bar dataKey="wins" stackId="c" fill={COLORS.wins} />
-        <Bar dataKey="losses" stackId="c" fill={COLORS.losses} />
+        <Bar dataKey="loses" stackId="c" fill={COLORS.loses} />
         <Bar dataKey="ties" stackId="c" fill={COLORS.ties} />
       </BarChart>
     </ResponsiveContainer>

@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import CardSelector from "src/modules/poker/components/CardSelector/CardSelector";
 import { Card as CardType } from "src/modules/poker/types";
@@ -39,6 +40,8 @@ function getCardState(
 }
 
 const CommunityCardsBlock: React.FC = () => {
+  const { t } = useTranslation();
+
   const dispatch = useAppDispatch();
   const holeCard0 = useSelector((state: RootState) => state.poker.holeCards[0]);
   const holeCard1 = useSelector((state: RootState) => state.poker.holeCards[1]);
@@ -77,7 +80,7 @@ const CommunityCardsBlock: React.FC = () => {
 
   return (
     <Card className="mb-3">
-      <Card.Header>Select community cards</Card.Header>
+      <Card.Header>{t("pages.main.selectCommunityCards")}</Card.Header>
       {communityCardsEnabled && (
         <Card.Body className="d-flex flex-wrap">
           {communityCards.map((card, i) => (
@@ -100,7 +103,7 @@ const CommunityCardsBlock: React.FC = () => {
         <Form.Check
           type="checkbox"
           checked={communityCardsEnabled}
-          label="Enable"
+          label={t("common.enable")}
           onChange={(e) => {
             setCommunityCardsEnabled(e.target.checked);
             if (!e.target.checked) {
@@ -114,7 +117,7 @@ const CommunityCardsBlock: React.FC = () => {
             variant="outline-danger"
             onClick={() => resetCommunityCards()}
           >
-            Reset
+            {t("common.reset")}
           </Button>
         )}
       </Card.Footer>

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
 import { Card as CardType } from "src/modules/poker/types";
 import { useAppDispatch } from "src/store";
@@ -11,6 +12,8 @@ import SubmitSimulationButton from "../../components/SubmitSimulationButton";
 import VisualizationBlock from "../../components/VisualizationBlock";
 
 const MainPage = () => {
+  const { t } = useTranslation();
+
   const location = useLocation();
   const dispatch = useAppDispatch();
 
@@ -34,7 +37,7 @@ const MainPage = () => {
 
   return (
     <Container>
-      <h2>Main Page</h2>
+      <h2>{t("pages.main.title")}</h2>
       <Row>
         <Col md={6} lg={4}>
           <HoleCardsBlock />

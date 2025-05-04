@@ -1,5 +1,6 @@
 import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { Button, Overlay, Popover } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { Card as CardType } from "../../types";
 import { SORTED_SUITS, SORTED_VALUES } from "../../utils/utils";
 import PlayingCard, { PlayingCardProps } from "../PlayingCard/PlayingCard";
@@ -56,6 +57,8 @@ const CardSelector: React.FC<CardSelectorProps> = ({
   cardDisabled,
   ...props
 }) => {
+  const { t } = useTranslation();
+
   const [visible, setVisible] = useState(false);
   const targetRef = useRef<HTMLDivElement | null>(null);
   const tooltipContainerRef = useRef(null);
@@ -101,10 +104,10 @@ const CardSelector: React.FC<CardSelectorProps> = ({
       >
         <Popover className="wide-popover">
           <Popover.Header as="div" className="d-flex justify-content-between">
-            <span>Select card</span>
+            <span>{t("poker.selectCard")}</span>
             {onCardReset && (
               <Button size="sm" variant="outline-danger" onClick={onCardReset}>
-                Reset
+                {t("common.reset")}
               </Button>
             )}
           </Popover.Header>

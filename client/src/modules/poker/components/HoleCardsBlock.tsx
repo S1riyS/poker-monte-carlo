@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import CardSelector from "src/modules/poker/components/CardSelector/CardSelector";
 import { Card as CardType } from "src/modules/poker/types";
@@ -7,6 +8,8 @@ import { RootState, useAppDispatch } from "src/store";
 import { setHoleCard } from "src/store/poker.reducer";
 
 const HoleCardsBlock: React.FC = () => {
+  const { t } = useTranslation();
+
   const dispatch = useAppDispatch();
   const holeCard0 = useSelector((state: RootState) => state.poker.holeCards[0]);
   const holeCard1 = useSelector((state: RootState) => state.poker.holeCards[1]);
@@ -17,7 +20,7 @@ const HoleCardsBlock: React.FC = () => {
 
   return (
     <Card className="mb-3">
-      <Card.Header>Select hole cards</Card.Header>
+      <Card.Header>{t("pages.main.selectHoleCards")}</Card.Header>
       <Card.Body>
         <div className="d-flex">
           <CardSelector

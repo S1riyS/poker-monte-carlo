@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { Card, Form } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { RiRefreshLine, RiUser3Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "src/store";
@@ -9,6 +10,8 @@ import {
 } from "src/store/poker.reducer";
 
 const SimulationSettingsForm = () => {
+  const { t } = useTranslation();
+
   const dispatch = useAppDispatch();
   const playerCount = useSelector(
     (state: RootState) => state.poker.playerCount,
@@ -32,11 +35,11 @@ const SimulationSettingsForm = () => {
   // TODO: formik
   return (
     <Card>
-      <Card.Header>Simulation Settings</Card.Header>
+      <Card.Header>{t("pages.main.simulationSettings.name")}</Card.Header>
       <Card.Body>
         <Form.Group className="mb-3">
           <Form.Label>
-            <RiUser3Line /> Player count
+            <RiUser3Line /> {t("pages.main.simulationSettings.playerCount")}
           </Form.Label>
           <Form.Control
             type="number"
@@ -51,7 +54,8 @@ const SimulationSettingsForm = () => {
         </Form.Group>
         <Form.Group>
           <Form.Label>
-            <RiRefreshLine /> Iteration count
+            <RiRefreshLine />{" "}
+            {t("pages.main.simulationSettings.iterationCount")}
           </Form.Label>
           <Form.Control
             type="number"

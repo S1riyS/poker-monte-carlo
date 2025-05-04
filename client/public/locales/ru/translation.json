@@ -1,0 +1,93 @@
+{
+  "pages": {
+    "main": {
+      "name": "Главная страница",
+      "title": "Покер Монте-Карло",
+      "visualization": "Визуализация",
+      "selectHoleCards": "Выберите карманные карты",
+      "selectCommunityCards": "Выберите общие карты",
+      "simulationSettings": {
+        "name": "Настройки симуляции",
+        "playerCount": "Количество игроков",
+        "iterationCount": "Количество итераций"
+      },
+      "runSimulation": "Симулировать",
+      "result": "Результат",
+      "charts": {
+        "summary": {
+          "name": "Сводка",
+          "description": "Как часто рука выигрывает, проигрывает или делит банк"
+        },
+        "combinations": {
+          "name": "Комбинации",
+          "description": "Как часто появляется каждая комбинация (независимо от результата)"
+        },
+        "winsBreakdown": {
+          "name": "Распределение побед",
+          "description": "С какой комбинацией рука выигрывает"
+        },
+        "combinationBreakdown": {
+          "name": "Разбор комбинаций",
+          "description": "Исходы руки для каждой составляющей комбинации"
+        }
+      }
+    },
+    "settings": {
+      "name": "Настройки",
+      "title": "Настройки",
+      "cardStyle": {
+        "title": "Стиль карт",
+        "simple": "Простой",
+        "mirrored": "Зеркальный"
+      },
+      "deckColors": {
+        "title": "Цвета колоды",
+        "2colors": "2 цвета",
+        "4colors": "4 цвета"
+      },
+      "language": "Язык"
+    },
+    "handTable": {
+      "name": "Таблица рук",
+      "title": "Таблица рук",
+      "simulateAll": "Симулировать все",
+      "visualization": "Визуализация таблицы рук"
+    }
+  },
+  "poker": {
+    "selectCard": "Выберите карту",
+    "outcome": {
+      "name": "Исход",
+      "win": "Победа",
+      "lose": "Проигрыш",
+      "tie": "Ничья"
+    },
+    "outcomes": {
+      "name": "Исходы",
+      "wins": "Победы",
+      "loses": "Поражения",
+      "ties": "Ничьи"
+    },
+    "combination": {
+      "ROYAL_FLUSH": "Флеш Рояль",
+      "STRAIGHT_FLUSH": "Стрит Флеш",
+      "FOUR_OF_A_KIND": "Каре",
+      "FULL_HOUSE": "Фулл Хаус",
+      "FLUSH": "Флеш",
+      "STRAIGHT": "Стрит",
+      "THREE_OF_A_KIND": "Сет",
+      "TWO_PAIRS": "Две пары",
+      "PAIR": "Пара",
+      "HIGH_CARD": "Старшая карта"
+    }
+  },
+  "common": {
+    "reset": "Сбросить",
+    "noData": "Нет данных",
+    "loading": "Загрузка...",
+    "notFound": "Не найдено",
+    "number": "Число",
+    "enable": "Включить",
+    "checkConsoleForMoreInfo": "Проверьте консоль для получения дополнительной информации"
+  }
+}

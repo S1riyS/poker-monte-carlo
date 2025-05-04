@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Bar,
   BarChart,
@@ -9,20 +10,20 @@ import {
   YAxis,
 } from "recharts";
 import { RunSimulationResponse } from "../services/api/types";
-import { PokerCombination, PokerCombinationName } from "../types";
-import { combinationToHumanName, SORTED_COMBINATIONS } from "../utils/utils";
+import { PokerCombination } from "../types";
+import { SORTED_COMBINATIONS } from "../utils/utils";
 
 const COLORS: Record<string, string> = {
-  [combinationToHumanName(PokerCombination.HIGH_CARD)]: "#6c757d", // Gray
-  [combinationToHumanName(PokerCombination.PAIR)]: "#dc3545", // Crimson red
-  [combinationToHumanName(PokerCombination.TWO_PAIRS)]: "#adb5bd", // Lighter gray
-  [combinationToHumanName(PokerCombination.THREE_OF_A_KIND)]: "#0d6efd", // Blue
-  [combinationToHumanName(PokerCombination.STRAIGHT)]: "#ffc107", // Yellow
-  [combinationToHumanName(PokerCombination.FLUSH)]: "#fd7e14", // Orange
-  [combinationToHumanName(PokerCombination.FULL_HOUSE)]: "#198754", // Dark green
-  [combinationToHumanName(PokerCombination.FOUR_OF_A_KIND)]: "#6610f2", // Purple
-  [combinationToHumanName(PokerCombination.STRAIGHT_FLUSH)]: "#20c997", // Teal
-  [combinationToHumanName(PokerCombination.ROYAL_FLUSH)]: "#e83e8c", // Pink
+  [PokerCombination.HIGH_CARD]: "#6c757d", // Gray
+  [PokerCombination.PAIR]: "#dc3545", // Crimson red
+  [PokerCombination.TWO_PAIRS]: "#adb5bd", // Lighter gray
+  [PokerCombination.THREE_OF_A_KIND]: "#0d6efd", // Blue
+  [PokerCombination.STRAIGHT]: "#ffc107", // Yellow
+  [PokerCombination.FLUSH]: "#fd7e14", // Orange
+  [PokerCombination.FULL_HOUSE]: "#198754", // Dark green
+  [PokerCombination.FOUR_OF_A_KIND]: "#6610f2", // Purple
+  [PokerCombination.STRAIGHT_FLUSH]: "#20c997", // Teal
+  [PokerCombination.ROYAL_FLUSH]: "#e83e8c", // Pink
 };
 
 type WinsBreakdownChartProps = {
@@ -30,24 +31,26 @@ type WinsBreakdownChartProps = {
 };
 
 const WinsBreakdownChart: React.FC<WinsBreakdownChartProps> = ({ data }) => {
+  const { t } = useTranslation();
+
   const transformedData: ({
     name: string;
   } & {
-    [K in PokerCombinationName]?: number;
+    [K in PokerCombination]?: number;
   })[] = useMemo(() => {
     return [
       {
-        name: "Wins",
+        name: t("poker.outcomes.wins"),
         ...data
           .map((e) => ({
-            [combinationToHumanName(e.name)]: e.win,
+            [e.name]: e.win,
           }))
           .reduce((a, b) => ({ ...a, ...b }), {}),
       },
     ];
-  }, [data]);
+  }, [data, t]);
   const usedCombinations = useMemo(() => {
-    return SORTED_COMBINATIONS.map(combinationToHumanName).filter(
+    return SORTED_COMBINATIONS.filter(
       (c) => transformedData[0][c] !== undefined && transformedData[0][c] > 0,
     );
   }, [transformedData]);
@@ -63,11 +66,12 @@ const WinsBreakdownChart: React.FC<WinsBreakdownChartProps> = ({ data }) => {
         <YAxis type="category" dataKey="name" />
         <Tooltip
           wrapperStyle={{ zIndex: 99999 }}
-          formatter={(value) =>
-            `${value} (${(((value as number) / total) * 100).toFixed(2)}%)`
-          }
+          formatter={(value, name) => [
+            `${value} (${(((value as number) / total) * 100).toFixed(2)}%)`,
+            t("poker.combination." + name),
+          ]}
         />
-        <Legend />
+        <Legend formatter={(value) => t("poker.combination." + value)} />
         {usedCombinations.map((e) => (
           <Bar key={e} dataKey={e} stackId="b" fill={COLORS[e]} />
         ))}

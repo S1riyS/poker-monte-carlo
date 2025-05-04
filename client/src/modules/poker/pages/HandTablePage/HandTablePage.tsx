@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import LoadingButton from "src/modules/common/components/LoadingButton";
 import { RootState } from "src/store";
@@ -12,6 +13,8 @@ import "./HandTablePage.css";
 import HandTableVisualization from "./HandTableVisualization";
 
 const HandTablePage = () => {
+  const { t } = useTranslation();
+
   const params = useSelector((state: RootState) => state.poker);
   const [runSimulation] = useRunSimulationMutation();
   const [stats, setStats] = useState<
@@ -100,13 +103,13 @@ const HandTablePage = () => {
 
   return (
     <Container>
-      <h2 className="my-3">Hand Table</h2>
+      <h2 className="my-3">{t("pages.handTable.title")}</h2>
       <Row>
         <Col md={6} lg={4}>
           <SimulationSettingsForm />
           <hr />
           <LoadingButton onClick={simulateAll} isLoading={loadingCount !== 0}>
-            Simulate All
+            {t("pages.handTable.simulateAll")}
           </LoadingButton>
         </Col>
 

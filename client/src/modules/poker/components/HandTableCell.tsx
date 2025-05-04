@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { GeneralPokerHand, Stat } from "../types";
 import { generalPokerHandToString } from "../utils/utils";
@@ -15,6 +16,7 @@ const HandTableCell: React.FC<HandTableCellProps> = ({
   hand: { value0, value1, suited },
   isLoading,
 }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handStr = useMemo(
@@ -67,7 +69,7 @@ const HandTableCell: React.FC<HandTableCellProps> = ({
             </div>
           </>
         ) : (
-          <div>No data (click simulation button)</div>
+          <div>{t("common.noData")}</div>
         )}
       </div>
     </Tooltip>
