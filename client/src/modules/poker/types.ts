@@ -23,7 +23,7 @@ export type PokerCombinationName =
   | "Straight Flush"
   | "Royal Flush";
 
-export type CardValueSymbol =
+export type CardValueCharacter =
   | "2"
   | "3"
   | "4"

@@ -1,7 +1,7 @@
 import {
   CardSuit,
   CardValue,
-  CardValueSymbol,
+  CardValueCharacter,
   PokerCombination,
   PokerCombinationName,
 } from "../types";
@@ -69,7 +69,7 @@ export function combinationToHumanName(
   }
 }
 
-export function valueToSymbol(value: CardValue): CardValueSymbol {
+export function valueToCharacter(value: CardValue): CardValueCharacter {
   switch (value) {
     case CardValue.ACE:
       return "A";

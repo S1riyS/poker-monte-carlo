@@ -1,27 +1,11 @@
 import clsx from "clsx";
 import { Card } from "react-bootstrap";
-import { ImClubs, ImDiamonds, ImHeart, ImSpades } from "react-icons/im";
-import { RiQuestionMark } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { RootState } from "src/store";
-import { CardStyle, CardSuit, Card as CardType, CardValue } from "../../types";
-import { valueToSymbol } from "../../utils/utils";
+import { CardStyle, CardSuit, Card as CardType } from "../../types";
 import "./PlayingCard.css";
-
-function suitIcon(suit?: CardSuit | null): React.ReactNode {
-  switch (suit) {
-    case CardSuit.CLUBS:
-      return <ImClubs />;
-    case CardSuit.DIAMONDS:
-      return <ImDiamonds />;
-    case CardSuit.HEARTS:
-      return <ImHeart />;
-    case CardSuit.SPADES:
-      return <ImSpades />;
-    default:
-      return <RiQuestionMark />;
-  }
-}
+import SuitIcon from "./SuitIcon";
+import ValueIcon from "./ValueIcon";
 
 function suitColor(suit?: CardSuit | null, deckColors?: 2 | 4): string {
   switch (suit) {
@@ -66,7 +50,6 @@ const PlayingCard: React.FC<PlayingCardProps> = ({
   const deckColors = useSelector(
     (state: RootState) => state.settings.deckColors,
   );
-  const symbol = suitIcon(card?.suit);
   const color = suitColor(card?.suit, deckColors);
 
   const dimensions = dimensionsMap[size];
@@ -78,64 +61,50 @@ const PlayingCard: React.FC<PlayingCardProps> = ({
         ...style,
         color: color,
       }}
-      className={clsx(
-        "d-flex flex-column justify-content-between p-1",
-        "playing-card",
-        className,
-        {
-          clickable: !cardDisabled && clickable,
-        },
-        {
-          disabled: cardDisabled,
-        },
-        {
-          required: required ?? true,
-        },
-      )}
+      className={clsx("d-flex flex-column p-1 playing-card", className, {
+        clickable: !cardDisabled && clickable,
+        disabled: cardDisabled,
+        required: required ?? true,
+        "justify-content-center": !card,
+        "justify-content-between": !!card,
+      })}
       {...props}
     >
       {cardStyle === CardStyle.MIRRORED && (
         <>
-          <span
-            style={{
-              fontSize: dimensions.fontSize,
-              lineHeight: "1",
-              textAlign: "left",
-              textDecorationLine:
-                card?.value === CardValue.SIX || card?.value === CardValue.NINE
-                  ? "underline"
-                  : "none",
-            }}
-          >
-            {card ? valueToSymbol(card.value) : ""}
-          </span>
+          {card && (
+            <ValueIcon
+              value={card.value}
+              underlineAmbigous
+              textAlign="left"
+              style={{ fontSize: dimensions.fontSize }}
+            />
+          )}
           <span style={{ fontSize: dimensions.fontSize, lineHeight: "1" }}>
-            {symbol}
+            <SuitIcon suit={card?.suit} />
           </span>
-          <span
-            style={{
-              fontSize: dimensions.fontSize,
-              lineHeight: "1",
-              textAlign: "left",
-              textDecorationLine:
-                card?.value === CardValue.SIX || card?.value === CardValue.NINE
-                  ? "underline"
-                  : "none",
-              transform: "rotate(180deg)",
-            }}
-          >
-            {card ? valueToSymbol(card.value) : ""}
-          </span>
+          {card && (
+            <ValueIcon
+              value={card.value}
+              underlineAmbigous
+              textAlign="left"
+              flipped
+              style={{ fontSize: dimensions.fontSize }}
+            />
+          )}
         </>
       )}
       {cardStyle === CardStyle.SIMPLE && (
         <>
-          {card?.value && (
-            <span style={{ fontSize: dimensions.fontSize }}>
-              {valueToSymbol(card.value)}
-            </span>
+          {card && (
+            <ValueIcon
+              value={card.value}
+              style={{ fontSize: dimensions.fontSize }}
+            />
           )}
-          <span style={{ fontSize: dimensions.fontSize }}>{symbol}</span>
+          <span style={{ fontSize: dimensions.fontSize }}>
+            <SuitIcon suit={card?.suit} />
+          </span>
         </>
       )}
     </Card>
