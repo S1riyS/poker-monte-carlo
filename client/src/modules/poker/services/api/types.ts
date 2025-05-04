@@ -6,6 +6,7 @@ export type ApiCard = {
 };
 
 export type RunSimulationRequest = {
+  signal?: AbortSignal;
   iterations: number;
   players: number;
   hand: CardType[];

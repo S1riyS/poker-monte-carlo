@@ -1,5 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import LoadingButton from "src/modules/common/components/LoadingButton";
 import { RootState } from "src/store";
@@ -18,7 +19,10 @@ const HandTablePage = () => {
   >({});
   const [loadingCount, setLoadingCount] = useState<number>(0);
 
+  const pendingRequests = useRef<AbortController[]>([]);
   const simulateAll = useCallback(async () => {
+    const controllers: AbortController[] = [];
+    let errors_toasted = 0;
     for (let i = 0; i < REVERSED_VALUES.length; i++) {
       for (let j = 0; j < REVERSED_VALUES.length; j++) {
         const hand = {
@@ -33,6 +37,9 @@ const HandTablePage = () => {
           [handStr]: { stat: prev[handStr]?.stat, isLoading: true },
         }));
         setLoadingCount((prev) => prev + 1);
+
+        const controller = new AbortController();
+        controllers.push(controller);
         runSimulation({
           iterations: params.iterationCount,
           players: params.playerCount,
@@ -46,6 +53,7 @@ const HandTablePage = () => {
               suit: hand.suited ? CardSuit.HEARTS : CardSuit.SPADES,
             },
           ],
+          signal: controller.signal,
         })
           .unwrap()
           .then((result) => {
@@ -56,11 +64,39 @@ const HandTablePage = () => {
               ...prev,
               [handStr]: { stat: { win, lose, tie }, isLoading: false },
             }));
+          })
+          .catch((e) => {
+            if (
+              !(
+                e.name === "AbortError" ||
+                (e.status === "FETCH_ERROR" &&
+                  (e.error as string).includes("aborted"))
+              )
+            ) {
+              console.error(e);
+              if (errors_toasted < 1) {
+                toast.error(e.error);
+                errors_toasted++;
+              }
+            }
+            setStats((prev) => ({
+              ...prev,
+              [handStr]: { stat: undefined, isLoading: false },
+            }));
+          })
+          .finally(() => {
             setLoadingCount((prev) => prev - 1);
           });
       }
+      pendingRequests.current = controllers;
     }
   }, [params, runSimulation]);
+
+  useEffect(() => {
+    return () => {
+      pendingRequests.current.forEach((ctrl) => ctrl.abort());
+    };
+  }, []);
 
   return (
     <Container>

@@ -23,6 +23,7 @@ export const pokerApi = createApi({
           iterations: data.iterations,
           players: data.players,
         } as RawRunSimulationRequest,
+        signal: data.signal,
       }),
       transformResponse: (data) => {
         const raw = (data as { data: RawSimulationEntry[] }).data;
