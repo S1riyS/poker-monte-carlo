@@ -1,4 +1,4 @@
-package simulation
+package utils
 
 import (
 	"github.com/S1riyS/poker-monte-carlo/pkg/poker"
@@ -7,9 +7,9 @@ import (
 type Outcome string
 
 const (
-	win  Outcome = "win"
-	lose Outcome = "lose"
-	tie  Outcome = "tie"
+	WIN  Outcome = "win"
+	LOSE Outcome = "lose"
+	TIE  Outcome = "tie"
 )
 
 type Simulation struct {
@@ -74,13 +74,13 @@ func (s Simulation) RunStep() StepResult {
 		comparison := poker.CompareResults(ourResult, playerResult)
 		// Fail fast. If there is at least 1 stronger hand - Lose
 		if comparison < 0 {
-			return StepResult{ourResult.Combination, lose}
+			return StepResult{ourResult.Combination, LOSE}
 		}
 		outcomeMaxDiff = max(outcomeMaxDiff, comparison)
 	}
 
 	if outcomeMaxDiff > 0 {
-		return StepResult{ourResult.Combination, win}
+		return StepResult{ourResult.Combination, WIN}
 	}
-	return StepResult{ourResult.Combination, tie}
+	return StepResult{ourResult.Combination, TIE}
 }

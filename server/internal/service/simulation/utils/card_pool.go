@@ -1,4 +1,4 @@
-package simulation
+package utils
 
 import (
 	"github.com/S1riyS/poker-monte-carlo/pkg/poker"

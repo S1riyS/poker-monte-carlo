@@ -5,6 +5,7 @@ import (
 
 	"github.com/S1riyS/poker-monte-carlo/internal/dto"
 	"github.com/S1riyS/poker-monte-carlo/internal/mapper"
+	"github.com/S1riyS/poker-monte-carlo/internal/service/simulation/utils"
 	"github.com/S1riyS/poker-monte-carlo/pkg/poker"
 )
 
@@ -43,7 +44,7 @@ func (ss *simulationService) Run(data dto.SimulationRequest) dto.SimulationRespo
 	}
 
 	// Setup simulation
-	simulation := NewSimulation(
+	simulation := utils.NewSimulation(
 		data.Players,
 		ss.mapper2pkg.MapEach(data.Hand),
 		ss.mapper2pkg.MapEach(data.Table),
@@ -52,7 +53,7 @@ func (ss *simulationService) Run(data dto.SimulationRequest) dto.SimulationRespo
 	// Setup channels
 	numWorkers := runtime.NumCPU() * 2
 	jobs := make(chan int, data.Iterations)
-	results := make(chan StepResult, data.Iterations)
+	results := make(chan utils.StepResult, data.Iterations)
 
 	// Initialize worker pool
 	for range numWorkers {
@@ -71,11 +72,11 @@ func (ss *simulationService) Run(data dto.SimulationRequest) dto.SimulationRespo
 
 		responseCombination := responseCombinationLookup[result.Combination.Name]
 		switch result.Outcome {
-		case win:
+		case utils.WIN:
 			responseCombination.Win += 1
-		case lose:
+		case utils.LOSE:
 			responseCombination.Lose += 1
-		case tie:
+		case utils.TIE:
 			responseCombination.Tie += 1
 		}
 	}
@@ -85,7 +86,7 @@ func (ss *simulationService) Run(data dto.SimulationRequest) dto.SimulationRespo
 }
 
 // worker is a WorkerPool unit that performs job
-func worker(jobs <-chan int, results chan<- StepResult, simulation *Simulation) {
+func worker(jobs <-chan int, results chan<- utils.StepResult, simulation *utils.Simulation) {
 	for range jobs {
 		results <- simulation.RunStep()
 	}
