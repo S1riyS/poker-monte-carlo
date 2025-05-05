@@ -11,3 +11,10 @@ func Card2PkgMapper(card dto.SimulationCard) poker.Card {
 		Suit: card.Suit,
 	}
 }
+
+func Card2DtoMapper(card poker.Card) dto.SimulationCard {
+	return dto.SimulationCard{
+		Rank: card.Rank,
+		Suit: card.Suit,
+	}
+}

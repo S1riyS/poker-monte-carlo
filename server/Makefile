@@ -69,4 +69,8 @@ clean: # Clean the binary
 	@echo "Cleaning..."
 	@rm -f main
 
+.PHONY: benchmarks
+benchmarks: # Run simulation bencmarks
+	@go test -bench=BenchmarkSimulationServiceRun -benchmem ./internal/service/simulation/ 
+
 $(VERBOSE).SILENT:
