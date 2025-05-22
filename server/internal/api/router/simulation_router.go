@@ -10,4 +10,5 @@ func NewSimulationRouter(group fiber.Router) {
 	ss := service.NewSimulationService()
 	sc := controller.SimulationController{SimulationService: ss}
 	group.Post("/simulation", sc.Simulate)
+	group.Post("/simulation/table", sc.SimulateTable)
 }

@@ -12,7 +12,7 @@ type SimulationController struct {
 	SimulationService service.ISimulationService
 }
 
-// Login - authenticate user and provide new pair of tokens
+// Simulate - runs simulation with specified conditions
 //
 //	@Summary		Run simulation
 //	@Description	Run simulation with specified conditions
@@ -36,4 +36,30 @@ func (sc *SimulationController) Simulate(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.Status(200).JSON(sc.SimulationService.Run(request))
+}
+
+// SimulateTable - runs simulation for all possible hands (cards pairs)
+//
+//	@Summary		Run simulation for every possible hand
+//	@Description	Run simulation for every possible hand with specified conditions
+//	@Tags			Simulation
+//	@Accept			json
+//	@Produce		json
+//	@Param			simulationTableRequest	body		dto.SimulationTableRequest	true	"Table Simulation Request"
+//	@Success		200						{object}	dto.SimulationTableResponse
+//	@Failure		400						{object}	dto.ValidationErrorResponse	"Validation error"
+//	@Router			/v1/simulation/table 	[post]
+func (sc *SimulationController) SimulateTable(ctx *fiber.Ctx) error {
+	var request dto.SimulationTableRequest
+	err := ctx.BodyParser(&request)
+	if err != nil {
+		return apperrors.NewUnprocessableEntityError()
+	}
+
+	err = validation.Validate(request)
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(200).JSON(sc.SimulationService.RunTable(request))
 }

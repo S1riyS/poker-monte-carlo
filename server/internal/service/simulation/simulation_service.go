@@ -6,20 +6,25 @@ import (
 	"github.com/S1riyS/poker-monte-carlo/internal/dto"
 	"github.com/S1riyS/poker-monte-carlo/internal/mapper"
 	"github.com/S1riyS/poker-monte-carlo/internal/service/simulation/utils"
+	"github.com/S1riyS/poker-monte-carlo/pkg/logger"
 	"github.com/S1riyS/poker-monte-carlo/pkg/poker"
+	"go.uber.org/zap"
 )
 
 type ISimulationService interface {
-	Run(data dto.SimulationRequest) dto.SimulationResponse
+	Run(dto.SimulationRequest) dto.SimulationResponse
+	RunTable(dto.SimulationTableRequest) dto.SimulationTableResponse
 }
 
 type simulationService struct {
 	mapper2pkg mapper.MapFunc[dto.SimulationCard, poker.Card]
+	mapper2dto mapper.MapFunc[poker.Card, dto.SimulationCard]
 }
 
 func NewSimulationService() ISimulationService {
 	return &simulationService{
 		mapper2pkg: mapper.Card2PkgMapper,
+		mapper2dto: mapper.Card2DtoMapper,
 	}
 }
 
@@ -82,6 +87,44 @@ func (ss *simulationService) Run(data dto.SimulationRequest) dto.SimulationRespo
 	}
 	close(results)
 
+	return response
+}
+
+func (ss *simulationService) RunTable(data dto.SimulationTableRequest) dto.SimulationTableResponse {
+	const mark = "service.simulation.RunTable"
+
+	// Setup all pairs
+	allPairs := utils.GenerateUniqueHands()
+
+	// Setup response
+	var response dto.SimulationTableResponse
+	response.Data = make([]dto.SpecificHandResult, len(allPairs))
+
+	for i, hand := range allPairs {
+		logger.Debug(mark, "Running simulation for hand", zap.Any("hand", hand))
+		// Run single simulation
+		currentHandAsDTO := ss.mapper2dto.MapEach(hand[:])
+		sigleSimulationResult := ss.Run(dto.SimulationRequest{
+			Players:    data.Players,
+			Hand:       currentHandAsDTO,
+			Iterations: data.Iterations,
+		})
+
+		var currentResult dto.AccumulatedHandResult
+		for _, combination := range sigleSimulationResult.Data {
+			currentResult.Win += combination.Win
+			currentResult.Lose += combination.Lose
+			currentResult.Tie += combination.Tie
+		}
+
+		// Save to response
+		response.Data[i] = dto.SpecificHandResult{
+			Hand:   currentHandAsDTO,
+			Result: currentResult,
+		}
+	}
+
+	logger.Debug(mark, "Simulation finished", zap.Int("total_hands", len(response.Data)))
 	return response
 }
 
