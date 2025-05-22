@@ -1,0 +1,57 @@
+name: "Swagger - GitHub Pages"
+
+on:
+  # Runs this workflow every 90 days, so artifacts are alive
+  schedule:
+    - cron: "0 7 1 1,4,7,10 *"
+  push:
+    branches: [main]
+    paths: [server/cmd/**.go, server/internal/api/**.go]
+
+jobs:
+  generate-swagger-spec:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.22"
+
+      - name: Install swag
+        run: go install github.com/swaggo/swag/cmd/swag@latest
+
+      - name: Generate swagger-spec.json
+        run: swag init -g cmd/api/main.go
+
+      - name: Upload swagger-spec.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: spec-file
+          path: docs/swagger.json
+          if-no-files-found: error # Fail if there is no swagger spec
+
+  deploy:
+    needs: generate-swagger-spec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download swagger-spec.json
+        uses: actions/download-artifact@v4
+        with:
+          name: spec-file
+
+      - name: Generate Swagger UI
+        uses: Legion2/swagger-ui-action@v1
+        with:
+          output: swagger-ui
+          spec-file: swagger.json
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: swagger-ui
