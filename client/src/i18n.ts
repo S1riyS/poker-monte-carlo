@@ -11,7 +11,7 @@ export function initI18n() {
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
-      fallbackLng: "en",
+      fallbackLng: "ru",
       debug: false,
       supportedLngs: ["en", "ru"] as SupportedLanguage[],
       interpolation: {
