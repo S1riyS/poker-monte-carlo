@@ -37,7 +37,12 @@ const MainPage = () => {
 
   return (
     <Container>
-      <h2>{t("pages.main.title")}</h2>
+      <h2>
+        {t("pages.main.title")}
+        {__APP_VERSION__ && (
+          <span className="text-muted"> v{__APP_VERSION__}</span>
+        )}
+      </h2>
       <Row>
         <Col md={6} lg={4}>
           <HoleCardsBlock />
