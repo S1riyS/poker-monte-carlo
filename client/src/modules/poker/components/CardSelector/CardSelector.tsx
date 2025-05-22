@@ -61,24 +61,22 @@ const CardSelector: React.FC<CardSelectorProps> = ({
 
   const [visible, setVisible] = useState(false);
   const targetRef = useRef<HTMLDivElement | null>(null);
-  const tooltipContainerRef = useRef(null);
+  const tooltipContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
-      if (!targetRef.current?.contains(target)) {
-        setVisible(false);
+      if (!tooltipContainerRef.current?.contains(target)) {
+        setTimeout(() => setVisible(false), 0);
       }
     };
 
     if (visible) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, [visible]);
 
