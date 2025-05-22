@@ -38,10 +38,10 @@ func (sc *SimulationController) Simulate(ctx *fiber.Ctx) error {
 	return ctx.Status(200).JSON(sc.SimulationService.Run(request))
 }
 
-// SimulateTable - runs simulation for all possible hands (cards pairs)
+// SimulateTable - runs simulation for all unique hands (suited and offsuit)
 //
-//	@Summary		Run simulation for every possible hand
-//	@Description	Run simulation for every possible hand with specified conditions
+//	@Summary		Run simulation for every suited and offsuit hands
+//	@Description	Run simulation for every suited and offsuit hands with specified conditions
 //	@Tags			Simulation
 //	@Accept			json
 //	@Produce		json
