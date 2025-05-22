@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: spec-file
-          path: docs/swagger.json
+          path: swagger/swagger.json
           if-no-files-found: error # Fail if there is no swagger spec
 
   deploy:
