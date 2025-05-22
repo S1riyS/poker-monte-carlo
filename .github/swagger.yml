@@ -6,7 +6,8 @@ on:
     - cron: "0 7 1 1,4,7,10 *"
   push:
     branches: [main]
-    paths: ['server/cmd/**.go', 'server/internal/api/**.go']
+    paths: 
+      - 'server/**.go'
 
 jobs:
   generate-swagger-spec:
