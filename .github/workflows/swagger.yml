@@ -4,6 +4,7 @@ on:
   # Runs this workflow every 90 days, so artifacts are alive
   schedule:
     - cron: "0 7 1 1,4,7,10 *"
+  workflow_dispatch:
   push:
     branches: [main]
     paths: 
