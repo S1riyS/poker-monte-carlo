@@ -13,6 +13,9 @@ const HoleCardsBlock: React.FC = () => {
   const dispatch = useAppDispatch();
   const holeCard0 = useSelector((state: RootState) => state.poker.holeCards[0]);
   const holeCard1 = useSelector((state: RootState) => state.poker.holeCards[1]);
+  const communityCards = useSelector(
+    (state: RootState) => state.poker.communityCards,
+  );
   const setHoleCard0 = (card: CardType | null) =>
     dispatch(setHoleCard({ index: 0, card }));
   const setHoleCard1 = (card: CardType | null) =>
@@ -27,14 +30,14 @@ const HoleCardsBlock: React.FC = () => {
             card={holeCard0}
             onCardSelect={setHoleCard0}
             className="m-1"
-            disabledCards={[holeCard0, holeCard1].filter((e) => !!e)}
+            disabledCards={[holeCard0, holeCard1].concat(communityCards)}
             onCardReset={() => setHoleCard0(null)}
           />
           <CardSelector
             card={holeCard1}
             onCardSelect={setHoleCard1}
             className="m-1"
-            disabledCards={[holeCard0, holeCard1]}
+            disabledCards={[holeCard0, holeCard1].concat(communityCards)}
             onCardReset={() => setHoleCard1(null)}
           />
         </div>
