@@ -11,6 +11,7 @@ import (
 
 	"github.com/S1riyS/poker-monte-carlo/internal/api/middlewares"
 	"github.com/S1riyS/poker-monte-carlo/internal/api/router"
+	"github.com/S1riyS/poker-monte-carlo/internal/config"
 	"github.com/S1riyS/poker-monte-carlo/internal/security/validation"
 	"github.com/S1riyS/poker-monte-carlo/pkg/logger"
 	_ "github.com/S1riyS/poker-monte-carlo/swagger"
@@ -23,14 +24,15 @@ import (
 )
 
 const (
-	ENV_PATH = ".env"
+	ENV_PATH  = ".env"
+	API_REFIX = "/api"
 )
 
 var logLevel = flag.String("l", "info", "log level")
 
 type App struct {
 	fiberServer *fiber.App
-	provider    *serviceProvider
+	config      *config.Config
 }
 
 func New() *App {
@@ -48,7 +50,7 @@ func (a *App) Run() error {
 	const mark = "app.Run"
 
 	go func() {
-		port := a.provider.Config().App.Port
+		port := a.config.App.Port
 		processedPort := fmt.Sprintf(":%d", port)
 		err := a.fiberServer.Listen(processedPort)
 		if err != nil {
@@ -90,8 +92,8 @@ func (a *App) runInitSteps() error {
 	initSteps := []func() error{
 		a.initEnvironment,
 		a.initLogger,
+		a.initConfig,
 		a.initFiberServer,
-		a.initServiceProvider,
 		a.initValidator,
 		a.initControllers,
 	}
@@ -118,19 +120,26 @@ func (a *App) initFiberServer() error {
 	})
 
 	// CORS policy
+	allowedOrigins := a.config.App.AllowedOrigins
 	a.fiberServer.Use(cors.New(cors.Config{
-		AllowOrigins:     "*",
+		AllowOrigins:     allowedOrigins,
 		AllowMethods:     "GET,POST,PUT,DELETE,OPTIONS,PATCH",
 		AllowHeaders:     "Accept, Authorization, Content-Type",
 		AllowCredentials: false,
 		MaxAge:           300,
 	}))
 
-	// Apply middlewares
+	// Apply global middlewares
 	a.fiberServer.Use(
 		middlewares.Logger,       // Logger
 		middlewares.ErrorHandler, // Error handler
 		recover.New(),            // Recover
+	)
+
+	// Apply /api specific middlewares
+	requestsPerMinute := a.config.App.RequestsPerMinute
+	a.fiberServer.Use(API_REFIX,
+		middlewares.RateLimiter(requestsPerMinute, 1*time.Minute),
 	)
 
 	return nil
@@ -147,8 +156,8 @@ func (a *App) initEnvironment() error {
 	return nil
 }
 
-func (a *App) initServiceProvider() error {
-	a.provider = newServiceProvider()
+func (a *App) initConfig() error {
+	a.config = config.GetConfig()
 	return nil
 }
 
@@ -159,7 +168,7 @@ func (a *App) initValidator() error {
 
 func (a *App) initControllers() error {
 	// Root router (/api)
-	api := a.fiberServer.Group("/api")
+	api := a.fiberServer.Group(API_REFIX)
 	api.Get("/docs/*", swagger.HandlerDefault) // Docs - /api/docs
 
 	// API v1 router (/api/v1)

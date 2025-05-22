@@ -13,8 +13,10 @@ type Config struct {
 }
 
 type AppConfig struct {
-	Env  string `env:"ENV" env-default:"development"`
-	Port int    `env:"PORT" env-default:"8080"`
+	Env               string `env:"ENV" env-default:"development"`
+	Port              int    `env:"PORT" env-default:"8080"`
+	AllowedOrigins    string `env:"ALLOWED_ORIGINS" env-default:"*"`
+	RequestsPerMinute int    `env:"REQUESTS_PER_MINUTE" env-default:"10"`
 }
 
 var (
