@@ -13,7 +13,7 @@ type SimulationCard struct {
 
 type SimulationRequest struct {
 	// Number of iterations in a simulation
-	Iterations int `json:"iterations" validate:"required,max=1000000" example:"10000"`
+	Iterations int `json:"iterations" validate:"required,max=250000" example:"10000"`
 	// Number of other players at the table
 	Players int `json:"players" validate:"required,min=1,max=10" example:"5"`
 	// Starting hand
