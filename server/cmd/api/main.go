@@ -9,7 +9,7 @@ import (
 // Application entry point
 //
 //	@title			PokerMonteCarlo
-//	@version		1.0
+//	@version		1.1
 //	@description	Simulation of starting hand in poker with Monte-Carlo method.
 //
 //	@contact.name	Ankudinov Kirill
