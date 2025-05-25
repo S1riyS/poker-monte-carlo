@@ -103,6 +103,37 @@ export function cardValueToInt(value: CardValue): CardValueInt {
   }
 }
 
+export function intToCardValue(value: CardValueInt): CardValue {
+  switch (value) {
+    case 14:
+      return CardValue.ACE;
+    case 13:
+      return CardValue.KING;
+    case 12:
+      return CardValue.QUEEN;
+    case 11:
+      return CardValue.JACK;
+    case 10:
+      return CardValue.TEN;
+    case 9:
+      return CardValue.NINE;
+    case 8:
+      return CardValue.EIGHT;
+    case 7:
+      return CardValue.SEVEN;
+    case 6:
+      return CardValue.SIX;
+    case 5:
+      return CardValue.FIVE;
+    case 4:
+      return CardValue.FOUR;
+    case 3:
+      return CardValue.THREE;
+    case 2:
+      return CardValue.TWO;
+  }
+}
+
 export function valueToCharacter(
   value: CardValue,
   tenAsT: boolean = false,

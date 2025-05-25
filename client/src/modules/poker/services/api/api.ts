@@ -1,11 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   RawRunSimulationRequest,
+  RawRunTableResponse,
   RawSimulationEntry,
   RunSimulationRequest,
   RunSimulationResponse,
+  RunTableRequest,
+  RunTableResponse,
 } from "./types";
-import { cardToApiCard } from "./utils";
+import { apiCardToCard, cardToApiCard } from "./utils";
 
 export const pokerApi = createApi({
   reducerPath: "pokerApi",
@@ -36,7 +39,25 @@ export const pokerApi = createApi({
         return transformed;
       },
     }),
+    runTable: build.mutation<RunTableResponse, RunTableRequest>({
+      query: (data) => ({
+        url: "/simulation/table",
+        method: "POST",
+        body: {
+          iterations: data.iterations,
+          players: data.players,
+        } as RunTableRequest,
+        signal: data.signal,
+      }),
+      transformResponse: (data: RawRunTableResponse) =>
+        ({
+          data: data.data.map((entry) => ({
+            hand: entry.hand.map(apiCardToCard),
+            results: entry.results,
+          })),
+        }) as RunTableResponse,
+    }),
   }),
 });
 
-export const { useRunSimulationMutation } = pokerApi;
+export const { useRunSimulationMutation, useRunTableMutation } = pokerApi;

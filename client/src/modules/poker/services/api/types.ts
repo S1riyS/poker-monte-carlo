@@ -5,6 +5,34 @@ export type ApiCard = {
   suit: "hearts" | "diamonds" | "clubs" | "spades";
 };
 
+export type RunTableRequest = {
+  signal?: AbortSignal;
+  iterations: number;
+  players: number;
+};
+
+export type RawRunTableResponse = {
+  data: {
+    hand: ApiCard[];
+    results: {
+      win: number;
+      lose: number;
+      tie: number;
+    };
+  }[];
+};
+
+export type RunTableResponse = {
+  data: {
+    hand: CardType[];
+    results: {
+      win: number;
+      lose: number;
+      tie: number;
+    };
+  }[];
+};
+
 export type RunSimulationRequest = {
   signal?: AbortSignal;
   iterations: number;
