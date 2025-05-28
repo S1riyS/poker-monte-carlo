@@ -15,8 +15,6 @@ const HandTableVisualization: React.FC<HandTableVisualizationProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  console.log(stats);
-
   return (
     <Card>
       <Card.Header>{t("pages.handTable.visualization")}</Card.Header>

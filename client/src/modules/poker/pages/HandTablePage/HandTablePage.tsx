@@ -1,7 +1,9 @@
 import { useCallback, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { formatApiError } from "src/modules/common/api/utils";
 import LoadingButton from "src/modules/common/components/LoadingButton";
 import { RootState } from "src/store";
 import SimulationSettingsForm from "../../components/SimulationSettingsForm";
@@ -45,7 +47,6 @@ const HandTablePage = () => {
     runTable({ iterations: params.iterationCount, players: params.playerCount })
       .unwrap()
       .then((res) => {
-        console.log("table res", res);
         const newStats: typeof stats = {};
         for (const stat of res.data) {
           newStats[
@@ -57,8 +58,19 @@ const HandTablePage = () => {
           ] = { stat: { ...stat.results }, isLoading: false };
         }
         setStats(newStats);
+      })
+      .catch((error) => {
+        toast.error(formatApiError(error, t));
+        setStats(
+          Object.fromEntries(
+            Object.keys(stats).map((key) => [
+              key,
+              { ...stats[key], isLoading: false },
+            ]),
+          ),
+        );
       });
-  }, [params.iterationCount, params.playerCount, runTable, stats]);
+  }, [params.iterationCount, params.playerCount, runTable, stats, t]);
 
   return (
     <Container>

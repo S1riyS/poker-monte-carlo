@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { GenericApiError } from "src/modules/common/api/types";
+import { formatApiError } from "src/modules/common/api/utils";
 import LoadingButton from "src/modules/common/components/LoadingButton";
 import { RootState, useAppDispatch } from "src/store";
 import { setSimulationResult } from "src/store/poker.reducer";
@@ -11,8 +11,7 @@ import { useRunSimulationMutation } from "../services/api/api";
 const SubmitSimulationButton = () => {
   const { t } = useTranslation();
 
-  const [runSimulation, { data, isLoading, isError, error }] =
-    useRunSimulationMutation();
+  const [runSimulation, { isLoading }] = useRunSimulationMutation();
   const dispatch = useAppDispatch();
 
   const params = useSelector((state: RootState) => state.poker);
@@ -26,25 +25,6 @@ const SubmitSimulationButton = () => {
     return true;
   }, [params, isLoading]);
 
-  useEffect(() => {
-    if (isError) {
-      console.error(error);
-      if ("data" in error) {
-        toast.error(
-          (error.data as GenericApiError).title +
-            ". " +
-            t("common.checkConsoleForMoreInfo"),
-        );
-      }
-    }
-  }, [isError, error, t]);
-
-  useEffect(() => {
-    if (data) {
-      dispatch(setSimulationResult(data));
-    }
-  }, [data, dispatch]);
-
   const submit = useCallback(() => {
     if (!params.holeCards[0] || !params.holeCards[1]) return;
     runSimulation({
@@ -52,8 +32,23 @@ const SubmitSimulationButton = () => {
       players: params.playerCount,
       hand: [params.holeCards[0], params.holeCards[1]],
       table: params.communityCards.filter((e) => !!e),
-    });
-  }, [params, runSimulation]);
+    })
+      .unwrap()
+      .then((res) => {
+        dispatch(setSimulationResult(res));
+      })
+      .catch((error) => {
+        toast.error(formatApiError(error, t));
+      });
+  }, [
+    dispatch,
+    params.communityCards,
+    params.holeCards,
+    params.iterationCount,
+    params.playerCount,
+    runSimulation,
+    t,
+  ]);
 
   return (
     <LoadingButton

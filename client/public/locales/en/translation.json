@@ -88,6 +88,8 @@
     "notFound": "Not found",
     "number": "Number",
     "enable": "Enable",
-    "checkConsoleForMoreInfo": "Check console for more info"
+    "unknownError": "Unknown error occured.",
+    "unableToConnect": "Unable to connect to server.",
+    "error": "Error"
   }
 }
